@@ -1,0 +1,1193 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Payabbhi Landing Page</title>
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="./images/logoicon.png">
+  <style>
+    /* ==========================================================================
+       Global Variables & Reset
+       ========================================================================== */
+    :root {
+      --navy: #1F3864;
+      --blue: #0070C0;
+      --teal: #2E8F89;
+      --teal-light: #7FD8CF;
+      --gold: #8A6D1A;
+      --ink: #1c2430;
+      --muted: #5B6770;
+      --bg: #ffffff;
+      --band: #F2F6FC;
+      --line: #dde5ef;
+      --footer-bg: #101623;
+      --footer-line: #232c3d;
+      --footer-text: #8b96a8;
+      --footer-link: #9db4d6;
+      --header-height: 60px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    body {
+      font-family: "Segoe UI", "Aptos", system-ui, -apple-system, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+
+    /* ==========================================================================
+       Scroll Entrance Animations
+       ========================================================================== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(35px);
+      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
+                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+      will-change: opacity, transform;
+    }
+
+    .reveal.active {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    /* ==========================================================================
+       Layout Containers
+       ========================================================================== */
+    .wrap {
+      max-width: 1080px;
+      margin: 0 auto;
+      padding: 0 24px;
+    }
+
+    @media (max-width: 640px) {
+      .wrap {
+        padding: 0 16px;
+      }
+    }
+
+    .flag {
+      background: #FDECEC;
+      color: #8a1f1f;
+      font-size: 11px;
+      font-weight: 700;
+      padding: 1px 7px;
+      border-radius: 9px;
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    /* ==========================================================================
+       Navigation Bar
+       ========================================================================== */
+    nav {
+      border-bottom: 1px solid var(--line);
+      background: #fff;
+      position: sticky;
+      top: 0;
+      z-index: 100;
+    }
+
+    .navin {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 16px 0;
+      gap: 12px;
+    }
+
+    .wordmark {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      font-size: 17px;
+      font-weight: 700;
+      color: var(--navy);
+      letter-spacing: 0.2px;
+    }
+
+    .wordmark img {
+      height: 28px; /* Adjust height according to your logo dimensions */
+      width: auto;
+      display: block;
+    }
+
+    .wordmark .divider {
+      color: var(--muted);
+      font-weight: 400;
+      opacity: 0.6;
+    }
+
+    .wordmark span {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .wordmark span {
+      color: var(--teal);
+      font-weight: 600;
+    }
+
+    .navcta {
+      background: var(--blue);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 9px 18px;
+      border-radius: 7px;
+      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .navcta:hover {
+      background: #005aa0;
+      transform: translateY(-2px);
+      box-shadow: 0 4px 12px rgba(0, 112, 192, 0.3);
+    }
+
+    /* ==========================================================================
+       Hero Section & Tabbed Portrait Video Player
+       ========================================================================== */
+    .hero {
+      background: linear-gradient(160deg, var(--navy) 0%, #27528f 70%, #2E8F89 130%);
+      color: #fff;
+      padding: 64px 0 56px;
+      scroll-margin-top: var(--header-height);
+    }
+
+    .eyebrow {
+      font-size: 13px;
+      letter-spacing: 2.2px;
+      text-transform: uppercase;
+      color: #a9c3e8;
+      font-weight: 700;
+      margin-bottom: 14px;
+    }
+
+    .hero h1 {
+      font-size: clamp(30px, 4.6vw, 46px);
+      line-height: 1.12;
+      font-weight: 800;
+      max-width: 640px;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--teal-light);
+    }
+
+    .hero .anchorline {
+      margin-top: 18px;
+      font-size: clamp(16px, 2vw, 19px);
+      font-weight: 600;
+      color: #dbe7f7;
+    }
+
+    .hero p.sub {
+      margin-top: 14px;
+      font-size: 16px;
+      color: #c4d4ea;
+      max-width: 620px;
+    }
+
+    .heroflex {
+      display: flex;
+      gap: 40px;
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .heroleft {
+      flex: 1 1 420px;
+      min-width: 300px;
+    }
+
+    /* Portrait Tabbed Video Component */
+    .video-container {
+      flex: 0 1 320px;
+      min-width: 280px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .video-container:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
+    }
+
+    .video-tabs {
+      display: flex;
+      gap: 2px;
+      margin-bottom: 16px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+      position: relative;
+    }
+
+    .tab-btn {
+      flex: 1;
+      padding: 10px 12px;
+      border: none;
+      background: transparent;
+      color: #c4d4ea;
+      font-size: 14px;
+      font-weight: 500;
+      cursor: pointer;
+      border-radius: 10px 10px 0 0;
+      position: relative;
+      bottom: -1px;
+      transition: all 0.2s ease;
+    }
+
+    .tab-btn:hover {
+      color: #ffffff;
+      background: rgba(255, 255, 255, 0.1);
+    }
+
+    .tab-btn.active {
+      background: #E1ECFE;
+      color: #0066FF;
+      font-weight: 700;
+      box-shadow: inset 0 -3px 0 0 #0052CC;
+    }
+
+    .video-content {
+      display: none;
+      position: relative;
+      width: 100%;
+      aspect-ratio: 9 / 16;
+      border-radius: 10px;
+      overflow: hidden;
+      background: #000;
+    }
+
+    .video-content.active {
+      display: block;
+    }
+
+    .video-content iframe {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      border: 0;
+    }
+
+    .ctarow {
+      margin-top: 26px;
+      display: flex;
+      gap: 14px;
+      flex-wrap: wrap;
+    }
+
+    .btn-p {
+      background: #fff;
+      color: var(--navy);
+      text-decoration: none;
+      font-weight: 700;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      transition: all 0.25s ease;
+    }
+
+    .btn-p:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
+    }
+
+    .btn-s {
+      background: transparent;
+      color: #fff;
+      text-decoration: none;
+      font-weight: 600;
+      padding: 13px 24px;
+      border-radius: 8px;
+      font-size: 15px;
+      border: 1.5px solid rgba(255, 255, 255, 0.55);
+      transition: all 0.25s ease;
+    }
+
+    .btn-s:hover {
+      background: rgba(255, 255, 255, 0.15);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .justask {
+      margin-top: 12px;
+      font-size: 13.5px;
+      color: #a9c3e8;
+    }
+
+    /* ==========================================================================
+       Trust Strip Section
+       ========================================================================== */
+    .trust {
+      background: var(--band);
+      border-bottom: 1px solid var(--line);
+      padding: 26px 0 20px;
+      scroll-margin-top: var(--header-height);
+    }
+
+    .visionline {
+      max-width: 860px;
+      margin: 0 auto 16px;
+      text-align: center;
+      font-size: clamp(15.5px, 2vw, 18px);
+      color: var(--navy);
+      font-weight: 600;
+      line-height: 1.5;
+    }
+
+    .visionline b {
+      color: var(--blue);
+    }
+
+    .citation-sub {
+      text-align: center;
+      font-size: 11.5px;
+      color: var(--muted);
+      margin: -8px 0 16px;
+    }
+
+    .trustin {
+      display: flex;
+      gap: 10px 34px;
+      flex-wrap: wrap;
+      justify-content: center;
+      font-size: 14px;
+      color: var(--navy);
+      font-weight: 600;
+    }
+
+    .trustin div::before {
+      content: "◆";
+      color: var(--teal);
+      margin-right: 8px;
+      font-size: 10px;
+      vertical-align: 1px;
+    }
+
+    /* ==========================================================================
+       General Section Styles
+       ========================================================================== */
+    section {
+      padding: 56px 0;
+      scroll-margin-top: var(--header-height);
+    }
+
+    h2 {
+      font-size: clamp(24px, 3vw, 32px);
+      color: var(--navy);
+      font-weight: 800;
+      line-height: 1.2;
+      margin-bottom: 10px;
+    }
+
+    .lede {
+      font-size: 16.5px;
+      color: var(--muted);
+      max-width: 720px;
+      margin-bottom: 34px;
+    }
+
+    /* ==========================================================================
+       Three Doors Section
+       ========================================================================== */
+    .doors {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 22px;
+    }
+
+    /* Card Mouseover Effect */
+    .door {
+      border: 1px solid var(--line);
+      border-top: 4px solid var(--teal);
+      border-radius: 10px;
+      padding: 26px 24px;
+      background: #fff;
+      box-shadow: 0 2px 10px rgba(31, 56, 100, 0.06);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
+                  border-color 0.3s ease;
+    }
+
+    .door:hover {
+      transform: translateY(-8px);
+      box-shadow: 0 14px 30px rgba(31, 56, 100, 0.12);
+      border-color: #cbd8e8;
+    }
+
+    .door .tag {
+      font-size: 12px;
+      letter-spacing: 1.8px;
+      text-transform: uppercase;
+      color: var(--teal);
+      font-weight: 800;
+      margin-bottom: 10px;
+    }
+
+    .door h3 {
+      font-size: 19.5px;
+      color: var(--navy);
+      line-height: 1.3;
+      margin-bottom: 12px;
+    }
+
+    .door p {
+      font-size: 14.5px;
+      color: var(--ink);
+      margin-bottom: 12px;
+    }
+
+    .door ul {
+      list-style: none;
+      margin: 0 0 16px;
+    }
+
+    .door li {
+      font-size: 14px;
+      color: var(--ink);
+      padding: 5px 0 5px 22px;
+      position: relative;
+    }
+
+    .door li::before {
+      content: "✓";
+      color: var(--teal);
+      font-weight: 800;
+      position: absolute;
+      left: 0;
+    }
+
+    .door .dl {
+      margin-top: auto;
+      font-size: 13.5px;
+      color: var(--blue);
+      font-weight: 600;
+      text-decoration: none;
+      padding: 8px 0 0;
+      border-top: 1px dashed var(--line);
+      transition: color 0.2s ease;
+    }
+
+    .door .dl:hover {
+      color: #004a80;
+    }
+
+    .door .dl::before {
+      content: "⬇ ";
+    }
+
+    /* ==========================================================================
+       Missing Model Section
+       ========================================================================== */
+    .mm {
+      background: var(--band);
+    }
+
+    .paths {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+      gap: 18px;
+      margin-bottom: 34px;
+    }
+
+    /* Path Cards Mouseover Effect */
+    .path {
+      background: #fff;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 22px 20px;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .path:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(31, 56, 100, 0.08);
+    }
+
+    .path .plabel {
+      font-size: 12px;
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      font-weight: 800;
+      margin-bottom: 8px;
+      color: var(--muted);
+    }
+
+    .path.lic {
+      border: 2px solid var(--teal);
+      box-shadow: 0 4px 14px rgba(46, 143, 137, 0.15);
+    }
+
+    .path.lic:hover {
+      box-shadow: 0 12px 28px rgba(46, 143, 137, 0.25);
+    }
+
+    .path.lic .plabel {
+      color: var(--teal);
+    }
+
+    .path h4 {
+      font-size: 16.5px;
+      color: var(--navy);
+      margin-bottom: 8px;
+    }
+
+    .path p {
+      font-size: 14px;
+      color: var(--ink);
+    }
+
+    /* Alignment fix: removed max-width so it matches card grid width above */
+    .rvotable {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      overflow: hidden;
+      width: 100%;
+      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
+    }
+
+    @media (max-width: 640px) {
+      .rvotable {
+        grid-template-columns: 1fr;
+      }
+    }
+
+    .rvocol {
+      padding: 28px 26px;
+      background: #fff;
+      transition: background-color 0.3s ease;
+    }
+
+    .rvocol.own {
+      background: var(--navy);
+      color: #fff;
+    }
+
+    .rvocol h3 {
+      font-size: 18px;
+      margin-bottom: 14px;
+      color: var(--navy);
+    }
+
+    .rvocol.own h3 {
+      color: var(--teal-light);
+    }
+
+    .rvocol ul {
+      list-style: none;
+    }
+
+    .rvocol li {
+      font-size: 14.5px;
+      padding: 6px 0 6px 24px;
+      position: relative;
+    }
+
+    .rvocol.rent li::before {
+      content: "—";
+      position: absolute;
+      left: 0;
+      color: #b06a6a;
+      font-weight: 700;
+    }
+
+    .rvocol.own li::before {
+      content: "✓";
+      position: absolute;
+      left: 0;
+      color: var(--teal-light);
+      font-weight: 800;
+    }
+
+    /* ==========================================================================
+       Features Section
+       ========================================================================== */
+    .features {
+      padding-top: 40px;
+    }
+
+    .featgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
+      gap: 14px;
+    }
+
+    /* Feature Cards Mouseover Effect */
+    .feat {
+      border: 1px solid var(--line);
+      border-left: 3px solid var(--blue);
+      border-radius: 8px;
+      padding: 14px 16px;
+      background: #fff;
+      font-size: 14px;
+      transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease;
+    }
+
+    .feat:hover {
+      transform: translateY(-4px) translateX(2px);
+      border-left-color: var(--teal);
+      box-shadow: 0 8px 20px rgba(0, 112, 192, 0.1);
+    }
+
+    .feat b {
+      display: block;
+      color: var(--navy);
+      font-size: 14.5px;
+      margin-bottom: 3px;
+    }
+
+    /* ==========================================================================
+       Proof / KPI Section
+       ========================================================================== */
+    .proofgrid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px;
+    }
+
+    /* Proof Cards Mouseover Effect */
+    .proof {
+      border: 1px solid var(--line);
+      border-radius: 10px;
+      padding: 24px 20px;
+      background: #fff;
+      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
+    }
+
+    .proof:hover {
+      transform: translateY(-6px);
+      border-color: var(--blue);
+      box-shadow: 0 12px 24px rgba(0, 112, 192, 0.12);
+    }
+
+    .proof .big {
+      font-size: 19px;
+      font-weight: 800;
+      color: var(--blue);
+      line-height: 1.25;
+      margin-bottom: 8px;
+    }
+
+    .proof .lbl {
+      font-size: 13.5px;
+      color: var(--muted);
+    }
+
+    .planesline {
+      margin-top: 26px;
+      font-size: 15px;
+      color: var(--navy);
+      font-weight: 600;
+      max-width: 780px;
+    }
+
+    /* ==========================================================================
+       Closer / CTA Section
+       ========================================================================== */
+    .closer {
+      background: linear-gradient(160deg, var(--navy), #27528f);
+      color: #fff;
+      text-align: center;
+    }
+
+    .closer h2 {
+      color: #fff;
+    }
+
+    .closer p.ask {
+      color: #dbe7f7;
+      font-size: 16.5px;
+      max-width: 640px;
+      margin: 0 auto 8px;
+    }
+
+    .closer p.ask .q {
+      display: block;
+      margin-top: 10px;
+      font-weight: 600;
+      color: #fff;
+    }
+
+    .closer .qual {
+      font-size: 0.82em;
+      font-style: italic;
+      color: #a9c3e8;
+    }
+
+    .closer p.plenty {
+      color: #a9c3e8;
+      font-size: 14px;
+      margin-bottom: 26px;
+    }
+
+    .dlrow {
+      margin-top: 26px;
+      display: flex;
+      gap: 14px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+
+    .dlbtn {
+      background: rgba(255, 255, 255, 0.1);
+      border: 1.5px solid rgba(255, 255, 255, 0.45);
+      color: #fff;
+      text-decoration: none;
+      font-size: 14px;
+      font-weight: 600;
+      padding: 11px 20px;
+      border-radius: 8px;
+      transition: all 0.25s ease;
+    }
+
+    .dlbtn:hover {
+      background: rgba(255, 255, 255, 0.25);
+      border-color: #fff;
+      transform: translateY(-2px);
+    }
+
+    .dlbtn::before {
+      content: "⬇ ";
+    }
+
+    .about-link {
+      margin-top: 22px;
+      font-size: 13.5px;
+    }
+
+    .about-link a {
+      color: var(--teal-light);
+      text-decoration: none;
+    }
+
+    .about-link a:hover {
+      text-decoration: underline;
+    }
+
+    /* Question Form */
+    .qform {
+      max-width: 520px;
+      margin: 0 auto;
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      text-align: left;
+    }
+
+    .qform textarea,
+    .qform input {
+      width: 100%;
+      border: 1.5px solid rgba(255, 255, 255, 0.4);
+      background: rgba(255, 255, 255, 0.08);
+      color: #fff;
+      border-radius: 8px;
+      padding: 12px 14px;
+      font-size: 15px;
+      font-family: inherit;
+      transition: border-color 0.2s ease, background 0.2s ease;
+    }
+
+    .qform textarea::placeholder,
+    .qform input::placeholder {
+      color: #a9c3e8;
+    }
+
+    .qform textarea:focus,
+    .qform input:focus {
+      outline: none;
+      border-color: #fff;
+      background: rgba(255, 255, 255, 0.15);
+    }
+
+    .qform button {
+      background: #fff;
+      color: var(--navy);
+      font-weight: 700;
+      border: none;
+      border-radius: 8px;
+      padding: 13px 24px;
+      font-size: 15px;
+      cursor: pointer;
+      transition: all 0.25s ease;
+    }
+
+    .qform button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
+    }
+
+    .qpriv {
+      font-size: 12.5px;
+      color: #a9c3e8;
+      text-align: center;
+    }
+
+    .qpriv a {
+      color: #a9c3e8;
+      text-decoration: underline;
+    }
+
+    .qfall {
+      font-size: 13.5px;
+      color: #c4d4ea;
+      text-align: center;
+      margin-top: 4px;
+    }
+
+    .qfall a {
+      color: var(--teal-light);
+      text-decoration: none;
+    }
+
+    .qfall a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==========================================================================
+       Footer
+       ========================================================================== */
+    footer {
+      background: var(--footer-bg);
+      color: var(--footer-text);
+      padding: 34px 0;
+      font-size: 12.5px;
+    }
+
+    footer .comp {
+      max-width: 860px;
+      margin: 0 auto 16px;
+      font-style: italic;
+      line-height: 1.6;
+    }
+
+    footer .base {
+      text-align: center;
+      border-top: 1px solid var(--footer-line);
+      padding-top: 16px;
+    }
+
+    footer a {
+      color: var(--footer-link);
+      text-decoration: none;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Navigation -->
+  <nav id="top">
+    <div class="wrap navin">
+      <a href="#top" class="wordmark">
+        <img src="./images/logoicon.png" alt="RS Software Logo">
+        <span class="divider">|</span>
+        <span>Payabbhi®</span>
+      </a>
+      <a class="navcta" href="#talk">Ask a question</a>
+    </div>
+  </nav>
+
+  <!-- Hero Section -->
+  <section class="hero reveal" id="hero">
+    <div class="wrap">
+      <div class="heroflex">
+        <div class="heroleft">
+          <div class="eyebrow">Merchant Acquiring · PayFac Infrastructure · White-Label</div>
+          <h1>Own the payments program.<br><em>Stop renting it.</em></h1>
+          <div class="anchorline">Own the relationship. Retain the data. Capture more of the economics.</div>
+          <p class="sub">Payabbhi® is a white-label merchant acquiring and payment-facilitation platform that banks, software platforms and ERPs license and run as their own — your merchants, your data, your settlement, your economics.</p>
+          <div class="ctarow">
+            <a class="btn-p" href="#doors">See your path ↓</a>
+            <a class="btn-s" href="#talk">Ask a question</a>
+          </div>
+          <div class="justask">Just ask — a one-line question is plenty.</div>
+        </div>
+
+        <!-- Portrait Tabbed Video Section -->
+        <div class="video-container">
+          <div class="video-tabs">
+            <button class="tab-btn active" onclick="switchVideo(event, 'video-bank')">Bank</button>
+            <button class="tab-btn" onclick="switchVideo(event, 'video-isv')">ISV</button>
+            <button class="tab-btn" onclick="switchVideo(event, 'video-erp')">ERP</button>
+          </div>
+
+          <!-- Bank Video Embed -->
+          <div id="video-bank" class="video-content active">
+            <iframe src="https://rssoftwarecorp-my.sharepoint.com/:v:/g/personal/sangeetag_rssoftware_co_in/IQBClUqcIEg0RKDOv1jYzz1eAcN8vudcf8dIrsiVUifGAhI?e=xIj9we" title="Bank Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+
+          <!-- ISV Video Embed -->
+          <div id="video-isv" class="video-content">
+            <iframe src="https://www.youtube.com/embed/YOUR_ISV_YOUTUBE_ID" title="ISV Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+
+          <!-- ERP Video Embed -->
+          <div id="video-erp" class="video-content">
+            <iframe src="https://www.youtube.com/embed/YOUR_ERP_YOUTUBE_ID" title="ERP Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Trust Strip Section -->
+  <section class="trust reveal" id="trust">
+    <div class="wrap">
+      <div class="visionline">
+        Payabbhi® — created by the engineers behind payment platforms processing approximately <b>half a trillion transactions a year</b>, and growing: <b>India's UPI</b>, the world's largest real-time payments rail by volume¹, and the world's largest <b>global card network</b>. <span class="flag">CONFIRM UPI-CITATION CLEARANCE</span>
+      </div>
+      <div class="citation-sub">
+        ¹ ACI Worldwide, Prime Time for Real-Time (2024); the IMF recognizes UPI as the world's largest real-time payment system.
+      </div>
+      <div class="trustin">
+        <div>Built on 30+ years of national and global payments infrastructure experience</div>
+        <div>99.995% platform uptime</div>
+        <div>Deployed with banks, PSPs &amp; platforms across North America and Asia</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Three Doors Section -->
+  <section id="doors" class="doors-section reveal">
+    <div class="wrap">
+      <h2>Three kinds of visitor. One decision.</h2>
+      <p class="lede">Whether you're a bank referring merchants away, a platform renting rails, or an ERP watching payments flow through un-monetized — the question is the same: who owns the program?</p>
+
+      <div class="doors">
+        <div class="door">
+          <div class="tag">Banks</div>
+          <h3>Referral fees are small. Merchant relationships are strategic.</h3>
+          <p>Move beyond referral economics with a bank-branded PayFac platform designed to keep merchants, data, and payment value closer to the bank.</p>
+          <ul>
+            <li>Your brand, your paper, your program — not a program you join</li>
+            <li>Merchant relationships, data and settlement stay with the bank</li>
+            <li>Licensed ownership: the value your program creates accrues to you</li>
+          </ul>
+          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_PayFac_Capabilities.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for PayFac Capabilities</a>
+        </div>
+
+        <div class="door">
+          <div class="tag">ISVs &amp; Software Platforms</div>
+          <h3>You own the customer experience. Why let someone else own payment economics?</h3>
+          <p>Embed branded payments, operate on your sponsor-bank rails, and keep more of the value your platform already creates.</p>
+          <ul>
+            <li>Embedded, platform-branded payments end to end</li>
+            <li>Settlement control, split funding, sub-merchant hierarchy</li>
+            <li>Processor-agnostic — your processor choice, your freedom to change it</li>
+          </ul>
+          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for Embedded Payments</a>
+        </div>
+
+        <div class="door">
+          <div class="tag">ERPs</div>
+          <h3>Every invoice, receivable and payment event in your ERP is an opportunity.</h3>
+          <p>Embed payments into the platform experience — connecting payment acceptance, invoice lifecycle, and AR workflows. Keep more value inside the ERP ecosystem.</p>
+          <ul>
+            <li>Acceptance wired into invoices, receivables and payouts</li>
+            <li>The payment event monetized by the ERP — not, by default, someone else</li>
+            <li>Multi-entity hierarchy for the businesses your ERP serves</li>
+          </ul>
+          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for Embedded Payments</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Missing Model Section -->
+  <section class="mm reveal" id="missing-model">
+    <div class="wrap">
+      <h2>The model missing from the market's menu.</h2>
+      <p class="lede">Payments are moving inside software. Businesses no longer choose an acquirer and bolt on software — they choose software, and payments come with it. Processing has become a commodity; the value now sits with whoever owns the merchant relationship and lifecycle. Which leaves every institution and platform a three-way choice:</p>
+
+      <div class="paths">
+        <div class="path">
+          <div class="plabel">Build</div>
+          <h4>Own it, eventually</h4>
+          <p>Building acquiring infrastructure in-house typically takes three to five years and an eight-figure budget — ownership arrives after the market has moved.</p>
+        </div>
+        <div class="path">
+          <div class="plabel">Rent</div>
+          <h4>Fast, but never yours</h4>
+          <p>PayFac-as-a-Service, managed programs, referral agreements — every rented model closes the capability gap while the merchant relationship and the economics stay with the provider.</p>
+        </div>
+        <div class="path lic">
+          <div class="plabel">License &amp; own</div>
+          <h4>Fast, and yours</h4>
+          <p>License the acquiring and PayFac operating platform and run it as your own program — the option most market taxonomies don't yet have a row for. Payabbhi® is that row.</p>
+        </div>
+      </div>
+
+      <div class="rvotable">
+        <div class="rvocol rent">
+          <h3>Refer or rent</h3>
+          <ul>
+            <li>A referral fee, while the provider owns your merchant</li>
+            <li>Merchant data lives in someone else's stack</li>
+            <li>The program's economics accrue to the provider</li>
+            <li>Your roadmap waits on a vendor's roadmap</li>
+          </ul>
+        </div>
+        <div class="rvocol own">
+          <h3>License &amp; own with Payabbhi®</h3>
+          <ul>
+            <li>Your program, under your brand, on your paper</li>
+            <li>Merchants, data and settlement files stay yours</li>
+            <li>The value your program creates accrues to you</li>
+            <li>Processor-agnostic beneath; dedicated cloud or on-premise</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Features Section -->
+  <section class="features reveal" id="features">
+    <div class="wrap">
+      <h2>The platform underneath.</h2>
+      <p class="lede">Everything an owned program needs to operate, on one platform — under your brand.</p>
+
+      <div class="featgrid">
+        <div class="feat"><b>Payment acceptance</b>POS, eCommerce and mCommerce — card and beyond</div>
+        <div class="feat"><b>Payment links</b>No-integration acceptance for any channel</div>
+        <div class="feat"><b>Tokenization</b>Stored credentials, network tokens, PCI-scope reduction</div>
+        <div class="feat"><b>Embedded payments</b>APIs, SDKs and drop-in components inside your product</div>
+        <div class="feat"><b>Invoicing</b>Invoice lifecycle wired to acceptance and AR</div>
+        <div class="feat"><b>Subscriptions</b>Recurring billing and mandate management</div>
+        <div class="feat"><b>Partner management</b>Sub-merchant hierarchy, delegated controls, residuals</div>
+        <div class="feat"><b>Merchant operations</b>Onboarding, portals, statements, disputes, support</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Proof / KPI Section -->
+  <section class="proof-section reveal" id="proof">
+    <div class="wrap">
+      <h2>Built to run the metrics an owned program lives by.</h2>
+      <p class="lede">We don't promise a percentage — results vary by implementation. We instrument the metrics themselves, so your program gets measurably better at the numbers that decide its economics.</p>
+
+      <div class="proofgrid">
+        <div class="proof">
+          <div class="big">Time-to-first-transaction</div>
+          <div class="lbl">Per merchant / entity — the activation funnel (application → approval → first settled transaction) is a first-class, measured workflow.</div>
+        </div>
+        <div class="proof">
+          <div class="big">Activation rate</div>
+          <div class="lbl">Merchants transacting within 30 days — because boarding without activation is cost, not revenue.</div>
+        </div>
+        <div class="proof">
+          <div class="big">Split funding</div>
+          <div class="lbl">Per-entity settlement across parties, funds and hierarchies — built for multi-entity, multi-location programs.</div>
+        </div>
+        <div class="proof">
+          <div class="big">Your rails</div>
+          <div class="lbl">Processor-agnostic by design — deployed in a dedicated cloud or on-premise, on the processor you choose.</div>
+        </div>
+      </div>
+
+      <p class="planesline">Behind these sits an operating model: nine operational control planes, each with the KPIs its owner runs, rolled into one CFO view — so the program is managed as a business line from day one.</p>
+    </div>
+  </section>
+
+  <!-- CTA Section -->
+  <section class="closer reveal" id="talk">
+    <div class="wrap">
+      <h2>Start with a question.</h2>
+      <p class="ask">
+        Ask the question you're actually sitting with — own vs. refer <span class="qual">(merchant)</span>; rent vs. own <span class="qual">(platform for merchant relationship / lifecycle)</span>.<span class="q">What does the crossover math look like?</span>
+      </p>
+      <p class="plenty">A one-line reply is plenty.</p>
+
+      <form class="qform" action="#" method="POST">
+        <textarea required rows="3" placeholder="Your question — one line is plenty"></textarea>
+        <input type="email" required placeholder="Your email (only so we can reply)">
+        <button type="submit">Send — a one-line question is plenty</button>
+        <div class="qpriv">We'll use your email only to reply. No lists, no follow-up sequence. <a href="#">Privacy policy</a></div>
+        <div class="qfall">Prefer email? Write to <a href="mailto:PLACEHOLDER@rssoftware.com">PLACEHOLDER@rssoftware.com</a> <span class="flag">MAILBOX TBC</span></div>
+      </form>
+
+      <div class="dlrow">
+        <a class="dlbtn" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_PayFac_Capabilities.pdf" target="_blank" rel="noopener">PayFac Capabilities brochure</a>
+        <a class="dlbtn" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Embedded Payments brochure</a>
+      </div>
+
+      <p class="about-link"><a href="https://rssoftware.ai/home/who_we_are/" target="_blank" rel="noopener">About RS Software →</a></p>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer>
+    <div class="wrap">
+      <div class="comp">Payabbhi® is a payments technology platform — not a bank, card processor, or licensed money transmitter. Operating as a payment facilitator requires an acquiring sponsor bank and applicable card-network registration. Payabbhi is processor-agnostic; specific processor/PSP integrations are confirmed during solution review.</div>
+      <div class="base">© 2026 RS Software · <a href="https://rssoftware.ai/about" target="_blank" rel="noopener">About</a> · <a href="#">Privacy policy</a> · <a href="#">Terms of use</a></div>
+    </div>
+  </footer>
+
+  <!-- Scripts -->
+  <script>
+    /* Tab Switch Script */
+    function switchVideo(event, videoId) {
+      const videos = document.querySelectorAll('.video-content');
+      videos.forEach(v => v.classList.remove('active'));
+
+      const tabs = document.querySelectorAll('.tab-btn');
+      tabs.forEach(t => t.classList.remove('active'));
+
+      document.getElementById(videoId).classList.add('active');
+      event.currentTarget.classList.add('active');
+    }
+
+    /* Scroll Reveal Animation Script using IntersectionObserver */
+    document.addEventListener('DOMContentLoaded', () => {
+      const observerOptions = {
+        root: null,
+        rootMargin: '0px',
+        threshold: 0.12
+      };
+
+      const observer = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('active');
+            observer.unobserve(entry.target);
+          }
+        });
+      }, observerOptions);
+
+      const revealElements = document.querySelectorAll('.reveal');
+      revealElements.forEach(el => observer.observe(el));
+    });
+  </script>
+
+</body>
+</html>
