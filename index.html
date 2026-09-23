@@ -216,16 +216,20 @@
 
     /* Portrait Tabbed Video Component */
     .video-container {
-      flex: 0 1 320px;
-      min-width: 280px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      width: 100%;
+      max-width: 500px; /* Adjust maximum width as needed */
+      aspect-ratio: 4 / 5; /* Matches 1080x1350 aspect ratio */
+      overflow: hidden;
+      border-radius: 8px; /* Optional rounded corners */
+      background-color: #000;
+    }
+
+    .video-container video,
+    .video-container iframe {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Ensures video fills container without distortion */
+      display: block;
     }
 
     .video-container:hover {
@@ -936,10 +940,10 @@
 
         <!-- Portrait Tabbed Video Section -->
         <div class="video-container">
-          <div class="video-tabs">
-            <button class="tab-btn active" onclick="switchVideo(event, 'video-bank')">Bank</button>
-            <button class="tab-btn" onclick="switchVideo(event, 'video-isv')">ISV</button>
-            <button class="tab-btn" onclick="switchVideo(event, 'video-erp')">ERP</button>
+          <video controls poster="thumbnail.jpg">
+          <source src="your-video.mp4" type="video/mp4">
+          Your browser does not support the video tag.
+          </video>
           </div>
 
           <!-- Bank Video Embed -->
