@@ -116,10 +116,11 @@
       font-weight: 700;
       color: var(--navy);
       letter-spacing: 0.2px;
+      text-decoration: none;
     }
 
     .wordmark img {
-      height: 28px; /* Adjust height according to your logo dimensions */
+      height: 28px;
       width: auto;
       display: block;
     }
@@ -128,11 +129,6 @@
       color: var(--muted);
       font-weight: 400;
       opacity: 0.6;
-    }
-
-    .wordmark span {
-      color: var(--teal);
-      font-weight: 600;
     }
 
     .wordmark span {
@@ -158,7 +154,7 @@
     }
 
     /* ==========================================================================
-       Hero Section & Tabbed Portrait Video Player
+       Hero Section & 1080x1350 Video Slider Player
        ========================================================================== */
     .hero {
       background: linear-gradient(160deg, var(--navy) 0%, #27528f 70%, #2E8F89 130%);
@@ -214,22 +210,18 @@
       min-width: 300px;
     }
 
-    /* Portrait Tabbed Video Component */
+    /* Updated 1080x1350 (4:5 Ratio) Video Slider Container */
     .video-container {
-      width: 100%;
-      max-width: 500px; /* Adjust maximum width as needed */
-      aspect-ratio: 4 / 5; /* Matches 1080x1350 aspect ratio */
-      overflow: hidden;
-      border-radius: 8px; /* Optional rounded corners */
-      background-color: #000;
-    }
-
-    .video-container video,
-    .video-container iframe {
-      width: 100%;
-      height: 100%;
-      object-fit: cover; /* Ensures video fills container without distortion */
-      display: block;
+      flex: 0 1 360px;
+      min-width: 280px;
+      margin: 0 auto;
+      background: rgba(255, 255, 255, 0.05);
+      border: 1px solid rgba(255, 255, 255, 0.15);
+      border-radius: 16px;
+      padding: 16px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
+      backdrop-filter: blur(8px);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
     }
 
     .video-container:hover {
@@ -239,24 +231,21 @@
 
     .video-tabs {
       display: flex;
-      gap: 2px;
-      margin-bottom: 16px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-      position: relative;
+      gap: 4px;
+      margin-bottom: 14px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
     }
 
     .tab-btn {
       flex: 1;
-      padding: 10px 12px;
+      padding: 8px 10px;
       border: none;
       background: transparent;
       color: #c4d4ea;
       font-size: 14px;
-      font-weight: 500;
+      font-weight: 600;
       cursor: pointer;
-      border-radius: 10px 10px 0 0;
-      position: relative;
-      bottom: -1px;
+      border-radius: 8px 8px 0 0;
       transition: all 0.2s ease;
     }
 
@@ -276,7 +265,7 @@
       display: none;
       position: relative;
       width: 100%;
-      aspect-ratio: 9 / 16;
+      aspect-ratio: 4 / 5; /* Updated ratio for 1080x1350 resolution */
       border-radius: 10px;
       overflow: hidden;
       background: #000;
@@ -286,12 +275,14 @@
       display: block;
     }
 
-    .video-content iframe {
+    .video-content iframe,
+    .video-content video {
       position: absolute;
       top: 0;
       left: 0;
       width: 100%;
       height: 100%;
+      object-fit: cover;
       border: 0;
     }
 
@@ -423,7 +414,6 @@
       gap: 22px;
     }
 
-    /* Card Mouseover Effect */
     .door {
       border: 1px solid var(--line);
       border-top: 4px solid var(--teal);
@@ -519,7 +509,6 @@
       margin-bottom: 34px;
     }
 
-    /* Path Cards Mouseover Effect */
     .path {
       background: #fff;
       border: 1px solid var(--line);
@@ -566,7 +555,6 @@
       color: var(--ink);
     }
 
-    /* Alignment fix: removed max-width so it matches card grid width above */
     .rvotable {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -644,7 +632,6 @@
       gap: 14px;
     }
 
-    /* Feature Cards Mouseover Effect */
     .feat {
       border: 1px solid var(--line);
       border-left: 3px solid var(--blue);
@@ -677,7 +664,6 @@
       gap: 20px;
     }
 
-    /* Proof Cards Mouseover Effect */
     .proof {
       border: 1px solid var(--line);
       border-radius: 10px;
@@ -796,7 +782,6 @@
       text-decoration: underline;
     }
 
-    /* Question Form */
     .qform {
       max-width: 520px;
       margin: 0 auto;
@@ -914,7 +899,7 @@
   <nav id="top">
     <div class="wrap navin">
       <a href="#top" class="wordmark">
-        <img src="./images/logoicon.png" alt="RS Software Logo">
+        <img src="./images/logo_with_blue.png" alt="RS Software Logo">
         <span class="divider">|</span>
         <span>Payabbhi®</span>
       </a>
@@ -938,17 +923,17 @@
           <div class="justask">Just ask — a one-line question is plenty.</div>
         </div>
 
-        <!-- Portrait Tabbed Video Section -->
+        <!-- 1080x1350 (4:5 Aspect Ratio) Tabbed Video Section -->
         <div class="video-container">
-          <video controls poster="thumbnail.jpg">
-          <source src="your-video.mp4" type="video/mp4">
-          Your browser does not support the video tag.
-          </video>
+          <div class="video-tabs">
+            <button class="tab-btn active" onclick="switchVideo(event, 'video-bank')">Bank</button>
+            <button class="tab-btn" onclick="switchVideo(event, 'video-isv')">ISV</button>
+            <button class="tab-btn" onclick="switchVideo(event, 'video-erp')">ERP</button>
           </div>
 
           <!-- Bank Video Embed -->
           <div id="video-bank" class="video-content active">
-            <iframe src="https://rssoftwarecorp-my.sharepoint.com/personal/sangeetag_rssoftware_co_in/_layouts/15/embed.aspx?UniqueId=9c4a9542-4820-4434-a0ce-bf58d8cf3d5e&embed=%7B%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=OneUpFileViewer&referrerScenario=EmbedDialog.Create" title="Bank Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+            <iframe src="https://rssoftwarecorp-my.sharepoint.com/:v:/g/personal/sangeetag_rssoftware_co_in/IQBClUqcIEg0RKDOv1jYzz1eAcN8vudcf8dIrsiVUifGAhI?e=xIj9we" title="Bank Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
           </div>
 
           <!-- ISV Video Embed -->
