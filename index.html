@@ -1,1183 +1,1172 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" class="scroll-smooth">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Payabbhi Landing Page</title>
-  <!-- Favicon -->
-  <link rel="icon" type="image/png" href="./images/logoicon.png">
-  <style>
-    /* ==========================================================================
-       Global Variables & Reset
-       ========================================================================== */
-    :root {
-      --navy: #1F3864;
-      --blue: #0070C0;
-      --teal: #2E8F89;
-      --teal-light: #7FD8CF;
-      --gold: #8A6D1A;
-      --ink: #1c2430;
-      --muted: #5B6770;
-      --bg: #ffffff;
-      --band: #F2F6FC;
-      --line: #dde5ef;
-      --footer-bg: #101623;
-      --footer-line: #232c3d;
-      --footer-text: #8b96a8;
-      --footer-link: #9db4d6;
-      --header-height: 60px;
-    }
-
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-    }
-
-    html {
-      scroll-behavior: smooth;
-    }
-
-    body {
-      font-family: "Segoe UI", "Aptos", system-ui, -apple-system, sans-serif;
-      color: var(--ink);
-      background: var(--bg);
-      line-height: 1.55;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* ==========================================================================
-       Scroll Entrance Animations
-       ========================================================================== */
-    .reveal {
-      opacity: 0;
-      transform: translateY(35px);
-      transition: opacity 0.8s cubic-bezier(0.16, 1, 0.3, 1), 
-                  transform 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-      will-change: opacity, transform;
-    }
-
-    .reveal.active {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    /* ==========================================================================
-       Layout Containers
-       ========================================================================== */
-    .wrap {
-      max-width: 1080px;
-      margin: 0 auto;
-      padding: 0 24px;
-    }
-
-    @media (max-width: 640px) {
-      .wrap {
-        padding: 0 16px;
-      }
-    }
-
-    .flag {
-      background: #FDECEC;
-      color: #8a1f1f;
-      font-size: 11px;
-      font-weight: 700;
-      padding: 1px 7px;
-      border-radius: 9px;
-      vertical-align: middle;
-      white-space: nowrap;
-    }
-
-    /* ==========================================================================
-       Navigation Bar
-       ========================================================================== */
-    nav {
-      border-bottom: 1px solid var(--line);
-      background: #fff;
-      position: sticky;
-      top: 0;
-      z-index: 100;
-    }
-
-    .navin {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 16px 0;
-      gap: 12px;
-    }
-
-    .wordmark {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      font-size: 17px;
-      font-weight: 700;
-      color: var(--navy);
-      letter-spacing: 0.2px;
-      text-decoration: none;
-    }
-
-    .wordmark img {
-      height: 28px;
-      width: auto;
-      display: block;
-    }
-
-    .wordmark .divider {
-      color: var(--muted);
-      font-weight: 400;
-      opacity: 0.6;
-    }
-
-    .wordmark span {
-      color: var(--teal);
-      font-weight: 600;
-    }
-
-    .navcta {
-      background: var(--blue);
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 9px 18px;
-      border-radius: 7px;
-      transition: background-color 0.2s ease, transform 0.2s ease, box-shadow 0.2s ease;
-    }
-
-    .navcta:hover {
-      background: #005aa0;
-      transform: translateY(-2px);
-      box-shadow: 0 4px 12px rgba(0, 112, 192, 0.3);
-    }
-
-    /* ==========================================================================
-       Hero Section & 1080x1350 Video Slider Player
-       ========================================================================== */
-    .hero {
-      background: linear-gradient(160deg, var(--navy) 0%, #27528f 70%, #2E8F89 130%);
-      color: #fff;
-      padding: 64px 0 56px;
-      scroll-margin-top: var(--header-height);
-    }
-
-    .eyebrow {
-      font-size: 13px;
-      letter-spacing: 2.2px;
-      text-transform: uppercase;
-      color: #a9c3e8;
-      font-weight: 700;
-      margin-bottom: 14px;
-    }
-
-    .hero h1 {
-      font-size: clamp(30px, 4.6vw, 46px);
-      line-height: 1.12;
-      font-weight: 800;
-      max-width: 640px;
-    }
-
-    .hero h1 em {
-      font-style: normal;
-      color: var(--teal-light);
-    }
-
-    .hero .anchorline {
-      margin-top: 18px;
-      font-size: clamp(16px, 2vw, 19px);
-      font-weight: 600;
-      color: #dbe7f7;
-    }
-
-    .hero p.sub {
-      margin-top: 14px;
-      font-size: 16px;
-      color: #c4d4ea;
-      max-width: 620px;
-    }
-
-    .heroflex {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      flex-wrap: wrap;
-    }
-
-    .heroleft {
-      flex: 1 1 420px;
-      min-width: 300px;
-    }
-
-    /* Updated 1080x1350 (4:5 Ratio) Video Slider Container */
-    .video-container {
-      flex: 0 1 360px;
-      min-width: 280px;
-      margin: 0 auto;
-      background: rgba(255, 255, 255, 0.05);
-      border: 1px solid rgba(255, 255, 255, 0.15);
-      border-radius: 16px;
-      padding: 16px;
-      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.25);
-      backdrop-filter: blur(8px);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .video-container:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-    }
-
-    .video-tabs {
-      display: flex;
-      gap: 4px;
-      margin-bottom: 14px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
-    }
-
-    .tab-btn {
-      flex: 1;
-      padding: 8px 10px;
-      border: none;
-      background: transparent;
-      color: #c4d4ea;
-      font-size: 14px;
-      font-weight: 600;
-      cursor: pointer;
-      border-radius: 8px 8px 0 0;
-      transition: all 0.2s ease;
-    }
-
-    .tab-btn:hover {
-      color: #ffffff;
-      background: rgba(255, 255, 255, 0.1);
-    }
-
-    .tab-btn.active {
-      background: #E1ECFE;
-      color: #0066FF;
-      font-weight: 700;
-      box-shadow: inset 0 -3px 0 0 #0052CC;
-    }
-
-    .video-content {
-      display: none;
-      position: relative;
-      width: 100%;
-      aspect-ratio: 4 / 5; /* Updated ratio for 1080x1350 resolution */
-      border-radius: 10px;
-      overflow: hidden;
-      background: #000;
-    }
-
-    .video-content.active {
-      display: block;
-    }
-
-    .video-content iframe,
-    .video-content video {
-      position: absolute;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      border: 0;
-    }
-
-    .ctarow {
-      margin-top: 26px;
-      display: flex;
-      gap: 14px;
-      flex-wrap: wrap;
-    }
-
-    .btn-p {
-      background: #fff;
-      color: var(--navy);
-      text-decoration: none;
-      font-weight: 700;
-      padding: 13px 24px;
-      border-radius: 8px;
-      font-size: 15px;
-      transition: all 0.25s ease;
-    }
-
-    .btn-p:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.3);
-    }
-
-    .btn-s {
-      background: transparent;
-      color: #fff;
-      text-decoration: none;
-      font-weight: 600;
-      padding: 13px 24px;
-      border-radius: 8px;
-      font-size: 15px;
-      border: 1.5px solid rgba(255, 255, 255, 0.55);
-      transition: all 0.25s ease;
-    }
-
-    .btn-s:hover {
-      background: rgba(255, 255, 255, 0.15);
-      border-color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .justask {
-      margin-top: 12px;
-      font-size: 13.5px;
-      color: #a9c3e8;
-    }
-
-    /* ==========================================================================
-       Trust Strip Section
-       ========================================================================== */
-    .trust {
-      background: var(--band);
-      border-bottom: 1px solid var(--line);
-      padding: 26px 0 20px;
-      scroll-margin-top: var(--header-height);
-    }
-
-    .visionline {
-      max-width: 860px;
-      margin: 0 auto 16px;
-      text-align: center;
-      font-size: clamp(15.5px, 2vw, 18px);
-      color: var(--navy);
-      font-weight: 600;
-      line-height: 1.5;
-    }
-
-    .visionline b {
-      color: var(--blue);
-    }
-
-    .citation-sub {
-      text-align: center;
-      font-size: 11.5px;
-      color: var(--muted);
-      margin: -8px 0 16px;
-    }
-
-    .trustin {
-      display: flex;
-      gap: 10px 34px;
-      flex-wrap: wrap;
-      justify-content: center;
-      font-size: 14px;
-      color: var(--navy);
-      font-weight: 600;
-    }
-
-    .trustin div::before {
-      content: "◆";
-      color: var(--teal);
-      margin-right: 8px;
-      font-size: 10px;
-      vertical-align: 1px;
-    }
-
-    /* ==========================================================================
-       General Section Styles
-       ========================================================================== */
-    section {
-      padding: 56px 0;
-      scroll-margin-top: var(--header-height);
-    }
-
-    h2 {
-      font-size: clamp(24px, 3vw, 32px);
-      color: var(--navy);
-      font-weight: 800;
-      line-height: 1.2;
-      margin-bottom: 10px;
-    }
-
-    .lede {
-      font-size: 16.5px;
-      color: var(--muted);
-      max-width: 720px;
-      margin-bottom: 34px;
-    }
-
-    /* ==========================================================================
-       Three Doors Section
-       ========================================================================== */
-    .doors {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-      gap: 22px;
-    }
-
-    .door {
-      border: 1px solid var(--line);
-      border-top: 4px solid var(--teal);
-      border-radius: 10px;
-      padding: 26px 24px;
-      background: #fff;
-      box-shadow: 0 2px 10px rgba(31, 56, 100, 0.06);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                  box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), 
-                  border-color 0.3s ease;
-    }
-
-    .door:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 14px 30px rgba(31, 56, 100, 0.12);
-      border-color: #cbd8e8;
-    }
-
-    .door .tag {
-      font-size: 12px;
-      letter-spacing: 1.8px;
-      text-transform: uppercase;
-      color: var(--teal);
-      font-weight: 800;
-      margin-bottom: 10px;
-    }
-
-    .door h3 {
-      font-size: 19.5px;
-      color: var(--navy);
-      line-height: 1.3;
-      margin-bottom: 12px;
-    }
-
-    .door p {
-      font-size: 14.5px;
-      color: var(--ink);
-      margin-bottom: 12px;
-    }
-
-    .door ul {
-      list-style: none;
-      margin: 0 0 16px;
-    }
-
-    .door li {
-      font-size: 14px;
-      color: var(--ink);
-      padding: 5px 0 5px 22px;
-      position: relative;
-    }
-
-    .door li::before {
-      content: "✓";
-      color: var(--teal);
-      font-weight: 800;
-      position: absolute;
-      left: 0;
-    }
-
-    .door .dl {
-      margin-top: auto;
-      font-size: 13.5px;
-      color: var(--blue);
-      font-weight: 600;
-      text-decoration: none;
-      padding: 8px 0 0;
-      border-top: 1px dashed var(--line);
-      transition: color 0.2s ease;
-    }
-
-    .door .dl:hover {
-      color: #004a80;
-    }
-
-    .door .dl::before {
-      content: "⬇ ";
-    }
-
-    /* ==========================================================================
-       Missing Model Section
-       ========================================================================== */
-    .mm {
-      background: var(--band);
-    }
-
-    .paths {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-      gap: 18px;
-      margin-bottom: 34px;
-    }
-
-    .path {
-      background: #fff;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 22px 20px;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-    }
-
-    .path:hover {
-      transform: translateY(-5px);
-      box-shadow: 0 10px 24px rgba(31, 56, 100, 0.08);
-    }
-
-    .path .plabel {
-      font-size: 12px;
-      letter-spacing: 2px;
-      text-transform: uppercase;
-      font-weight: 800;
-      margin-bottom: 8px;
-      color: var(--muted);
-    }
-
-    .path.lic {
-      border: 2px solid var(--teal);
-      box-shadow: 0 4px 14px rgba(46, 143, 137, 0.15);
-    }
-
-    .path.lic:hover {
-      box-shadow: 0 12px 28px rgba(46, 143, 137, 0.25);
-    }
-
-    .path.lic .plabel {
-      color: var(--teal);
-    }
-
-    .path h4 {
-      font-size: 16.5px;
-      color: var(--navy);
-      margin-bottom: 8px;
-    }
-
-    .path p {
-      font-size: 14px;
-      color: var(--ink);
-    }
-
-    .rvotable {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 0;
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      overflow: hidden;
-      width: 100%;
-      box-shadow: 0 4px 16px rgba(0,0,0,0.03);
-    }
-
-    @media (max-width: 640px) {
-      .rvotable {
-        grid-template-columns: 1fr;
-      }
-    }
-
-    .rvocol {
-      padding: 28px 26px;
-      background: #fff;
-      transition: background-color 0.3s ease;
-    }
-
-    .rvocol.own {
-      background: var(--navy);
-      color: #fff;
-    }
-
-    .rvocol h3 {
-      font-size: 18px;
-      margin-bottom: 14px;
-      color: var(--navy);
-    }
-
-    .rvocol.own h3 {
-      color: var(--teal-light);
-    }
-
-    .rvocol ul {
-      list-style: none;
-    }
-
-    .rvocol li {
-      font-size: 14.5px;
-      padding: 6px 0 6px 24px;
-      position: relative;
-    }
-
-    .rvocol.rent li::before {
-      content: "—";
-      position: absolute;
-      left: 0;
-      color: #b06a6a;
-      font-weight: 700;
-    }
-
-    .rvocol.own li::before {
-      content: "✓";
-      position: absolute;
-      left: 0;
-      color: var(--teal-light);
-      font-weight: 800;
-    }
-
-    /* ==========================================================================
-       Features Section
-       ========================================================================== */
-    .features {
-      padding-top: 40px;
-    }
-
-    .featgrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));
-      gap: 14px;
-    }
-
-    .feat {
-      border: 1px solid var(--line);
-      border-left: 3px solid var(--blue);
-      border-radius: 8px;
-      padding: 14px 16px;
-      background: #fff;
-      font-size: 14px;
-      transition: transform 0.25s ease, box-shadow 0.25s ease, border-left-color 0.25s ease;
-    }
-
-    .feat:hover {
-      transform: translateY(-4px) translateX(2px);
-      border-left-color: var(--teal);
-      box-shadow: 0 8px 20px rgba(0, 112, 192, 0.1);
-    }
-
-    .feat b {
-      display: block;
-      color: var(--navy);
-      font-size: 14.5px;
-      margin-bottom: 3px;
-    }
-
-    /* ==========================================================================
-       Proof / KPI Section
-       ========================================================================== */
-    .proofgrid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-      gap: 20px;
-    }
-
-    .proof {
-      border: 1px solid var(--line);
-      border-radius: 10px;
-      padding: 24px 20px;
-      background: #fff;
-      transition: transform 0.3s ease, box-shadow 0.3s ease, border-color 0.3s ease;
-    }
-
-    .proof:hover {
-      transform: translateY(-6px);
-      border-color: var(--blue);
-      box-shadow: 0 12px 24px rgba(0, 112, 192, 0.12);
-    }
-
-    .proof .big {
-      font-size: 19px;
-      font-weight: 800;
-      color: var(--blue);
-      line-height: 1.25;
-      margin-bottom: 8px;
-    }
-
-    .proof .lbl {
-      font-size: 13.5px;
-      color: var(--muted);
-    }
-
-    .planesline {
-      margin-top: 26px;
-      font-size: 15px;
-      color: var(--navy);
-      font-weight: 600;
-      max-width: 780px;
-    }
-
-    /* ==========================================================================
-       Closer / CTA Section
-       ========================================================================== */
-    .closer {
-      background: linear-gradient(160deg, var(--navy), #27528f);
-      color: #fff;
-      text-align: center;
-    }
-
-    .closer h2 {
-      color: #fff;
-    }
-
-    .closer p.ask {
-      color: #dbe7f7;
-      font-size: 16.5px;
-      max-width: 640px;
-      margin: 0 auto 8px;
-    }
-
-    .closer p.ask .q {
-      display: block;
-      margin-top: 10px;
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .closer .qual {
-      font-size: 0.82em;
-      font-style: italic;
-      color: #a9c3e8;
-    }
-
-    .closer p.plenty {
-      color: #a9c3e8;
-      font-size: 14px;
-      margin-bottom: 26px;
-    }
-
-    .dlrow {
-      margin-top: 26px;
-      display: flex;
-      gap: 14px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .dlbtn {
-      background: rgba(255, 255, 255, 0.1);
-      border: 1.5px solid rgba(255, 255, 255, 0.45);
-      color: #fff;
-      text-decoration: none;
-      font-size: 14px;
-      font-weight: 600;
-      padding: 11px 20px;
-      border-radius: 8px;
-      transition: all 0.25s ease;
-    }
-
-    .dlbtn:hover {
-      background: rgba(255, 255, 255, 0.25);
-      border-color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .dlbtn::before {
-      content: "⬇ ";
-    }
-
-    .about-link {
-      margin-top: 22px;
-      font-size: 13.5px;
-    }
-
-    .about-link a {
-      color: var(--teal-light);
-      text-decoration: none;
-    }
-
-    .about-link a:hover {
-      text-decoration: underline;
-    }
-
-    .qform {
-      max-width: 520px;
-      margin: 0 auto;
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      text-align: left;
-    }
-
-    .qform textarea,
-    .qform input {
-      width: 100%;
-      border: 1.5px solid rgba(255, 255, 255, 0.4);
-      background: rgba(255, 255, 255, 0.08);
-      color: #fff;
-      border-radius: 8px;
-      padding: 12px 14px;
-      font-size: 15px;
-      font-family: inherit;
-      transition: border-color 0.2s ease, background 0.2s ease;
-    }
-
-    .qform textarea::placeholder,
-    .qform input::placeholder {
-      color: #a9c3e8;
-    }
-
-    .qform textarea:focus,
-    .qform input:focus {
-      outline: none;
-      border-color: #fff;
-      background: rgba(255, 255, 255, 0.15);
-    }
-
-    .qform button {
-      background: #fff;
-      color: var(--navy);
-      font-weight: 700;
-      border: none;
-      border-radius: 8px;
-      padding: 13px 24px;
-      font-size: 15px;
-      cursor: pointer;
-      transition: all 0.25s ease;
-    }
-
-    .qform button:hover {
-      transform: translateY(-2px);
-      box-shadow: 0 6px 18px rgba(255, 255, 255, 0.25);
-    }
-
-    .qpriv {
-      font-size: 12.5px;
-      color: #a9c3e8;
-      text-align: center;
-    }
-
-    .qpriv a {
-      color: #a9c3e8;
-      text-decoration: underline;
-    }
-
-    .qfall {
-      font-size: 13.5px;
-      color: #c4d4ea;
-      text-align: center;
-      margin-top: 4px;
-    }
-
-    .qfall a {
-      color: var(--teal-light);
-      text-decoration: none;
-    }
-
-    .qfall a:hover {
-      text-decoration: underline;
-    }
-
-    /* ==========================================================================
-       Footer
-       ========================================================================== */
-    footer {
-      background: var(--footer-bg);
-      color: var(--footer-text);
-      padding: 34px 0;
-      font-size: 12.5px;
-    }
-
-    footer .comp {
-      max-width: 860px;
-      margin: 0 auto 16px;
-      font-style: italic;
-      line-height: 1.6;
-    }
-
-    footer .base {
-      text-align: center;
-      border-top: 1px solid var(--footer-line);
-      padding-top: 16px;
-    }
-
-    footer a {
-      color: var(--footer-link);
-      text-decoration: none;
-    }
-
-    footer a:hover {
-      text-decoration: underline;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payabbhi® — White-Label Merchant Acquiring & PayFac Infrastructure</title>
+    
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        glass: {
+                            50: 'rgba(255, 255, 255, 0.75)',
+                            100: 'rgba(255, 255, 255, 0.9)',
+                            card: 'rgba(255, 255, 255, 0.65)',
+                            border: 'rgba(255, 255, 255, 0.8)',
+                            dark: 'rgba(11, 19, 43, 0.85)',
+                        },
+                        periwinkle: {
+                            50: '#f0f4ff',
+                            100: '#e0e7ff',
+                            300: '#a5b4fc',
+                            400: '#818cf8',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                        },
+                        brand: {
+                            50: '#eff6ff',
+                            100: '#dbeafe',
+                            400: '#38bdf8',
+                            500: '#2563eb',
+                            600: '#1d4ed8',
+                            700: '#1e40af',
+                        },
+                        navy: {
+                            800: '#0f172a',
+                            900: '#090d16',
+                            950: '#030712',
+                            hero: '#0B132B'
+                        }
+                    },
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                    },
+                    borderRadius: {
+                        '4xl': '2rem',
+                        '5xl': '2.5rem',
+                    },
+                    boxShadow: {
+                        'glass': '0 20px 50px rgba(0, 0, 0, 0.05), inset 0 1px 1px rgba(255, 255, 255, 0.8)',
+                        'glass-sm': '0 10px 30px rgba(37, 99, 235, 0.06), inset 0 1px 1px rgba(255, 255, 255, 0.9)',
+                        'glow-blue': '0 0 35px rgba(37, 99, 235, 0.35)',
+                        'glow-purple': '0 0 45px rgba(99, 102, 241, 0.25)',
+                    }
+                }
+            }
+        }
+    </script>
+    
+    <!-- Google Fonts: Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #f4f7fc;
+            color: #1e293b;
+            overflow-x: hidden;
+        }
+
+        /* Ambient floating blurred background elements */
+        .ambient-bg {
+            position: fixed;
+            inset: 0;
+            pointer-events: none;
+            z-index: 0;
+            overflow: hidden;
+        }
+        .orb-1 {
+            position: absolute;
+            top: -10%;
+            right: 10%;
+            width: 650px;
+            height: 650px;
+            background: radial-gradient(circle, rgba(147, 197, 253, 0.45) 0%, rgba(199, 210, 254, 0.2) 50%, rgba(255,255,255,0) 70%);
+            filter: blur(80px);
+            animation: floatOrb 18s ease-in-out infinite alternate;
+        }
+        .orb-2 {
+            position: absolute;
+            top: 40%;
+            left: -10%;
+            width: 700px;
+            height: 700px;
+            background: radial-gradient(circle, rgba(165, 180, 252, 0.35) 0%, rgba(224, 231, 255, 0.2) 60%, rgba(255,255,255,0) 70%);
+            filter: blur(90px);
+            animation: floatOrb2 22s ease-in-out infinite alternate;
+        }
+        .orb-3 {
+            position: absolute;
+            bottom: 5%;
+            right: -5%;
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(99, 102, 241, 0.25) 0%, rgba(56, 189, 248, 0.15) 50%, rgba(255,255,255,0) 70%);
+            filter: blur(85px);
+            animation: floatOrb 20s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatOrb {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(-40px, 50px) scale(1.1); }
+        }
+        @keyframes floatOrb2 {
+            0% { transform: translate(0, 0) scale(1); }
+            100% { transform: translate(50px, -40px) scale(1.08); }
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #f1f5f9;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #3b82f6;
+            border-radius: 9999px;
+        }
+
+        /* Aspect Ratio for 4:5 vertical video container (1080x1350) */
+        .aspect-4-5 {
+            aspect-ratio: 4 / 5;
+        }
+
+        /* Glassmorphism Panel Styling */
+        .glass-panel {
+            background: rgba(255, 255, 255, 0.75);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.9);
+            box-shadow: 0 15px 35px rgba(15, 23, 42, 0.04), inset 0 1px 1px rgba(255, 255, 255, 0.9);
+        }
+
+        .glass-panel-dark {
+            background: linear-gradient(135deg, rgba(11, 19, 43, 0.95) 0%, rgba(15, 23, 42, 0.9) 100%);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.12);
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+    </style>
 </head>
-<body>
+<body class="relative bg-slate-50 text-slate-900 antialiased selection:bg-brand-500 selection:text-white">
 
-  <!-- Navigation -->
-  <nav id="top">
-    <div class="wrap navin">
-      <a href="#top" class="wordmark">
-        <img src="./images/logo_with_blue.png" alt="RS Software Logo">
-        <span class="divider">|</span>
-        <span>Payabbhi®</span>
-      </a>
-      <a class="navcta" href="#talk">Ask a question</a>
+    <!-- Ambient Floating Orbs Background -->
+    <div class="ambient-bg">
+        <div class="orb-1"></div>
+        <div class="orb-2"></div>
+        <div class="orb-3"></div>
     </div>
-  </nav>
 
-  <!-- Hero Section -->
-  <section class="hero reveal" id="hero">
-    <div class="wrap">
-      <div class="heroflex">
-        <div class="heroleft">
-          <div class="eyebrow">Merchant Acquiring · PayFac Infrastructure · White-Label</div>
-          <h1>Own the payments program.<br><em>Stop renting it.</em></h1>
-          <div class="anchorline">Own the relationship. Retain the data. Capture more of the economics.</div>
-          <p class="sub">Payabbhi® is a white-label merchant acquiring and payment-facilitation platform that banks, software platforms and ERPs license and run as their own — your merchants, your data, your settlement, your economics.</p>
-          <div class="ctarow">
-            <a class="btn-p" href="#doors">See your path ↓</a>
-            <a class="btn-s" href="#talk">Ask a question</a>
-          </div>
-          <div class="justask">Just ask — a one-line question is plenty.</div>
+    <!-- SECTION 1: HEADER & TOP NAVIGATION -->
+    <header class="sticky top-4 z-50 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 transition-all duration-200">
+        <div class="glass-panel rounded-full px-6 h-16 flex items-center justify-between shadow-glass-sm border border-white/80">
+            <!-- Left Logos: RS Software + Payabbhi -->
+            <div class="flex items-center space-x-4 sm:space-x-6">
+                <!-- RS Software Logo SVG -->
+                <div class="flex items-center space-x-2">
+                    <svg class="h-7 w-auto text-slate-800" viewBox="0 0 160 40" fill="none" xmlns="http://www.w3.org/2000/svg" aria-label="RS Software Logo">
+                        <rect width="36" height="36" rx="10" fill="#060C1A"/>
+                        <path d="M10 26V10H18C20.5 10 22 11.5 22 13.5C22 15.5 20.5 17 18 17H14V26H10ZM14 14H17.5C18.5 14 19 13.8 19 13.5C19 13.2 18.5 13 17.5 13H14V14Z" fill="#3B82F6"/>
+                        <path d="M18 17L23 26H19L14.8 18.5L18 17Z" fill="#60A5FA"/>
+                        <path d="M25 24C25 25.3 26 26 27.5 26C29 26 29.8 25.2 29.8 24.2C29.8 21.2 24.8 22 24.8 18C24.8 16 26.5 14.8 28.8 14.8C31 14.8 32.5 16 32.5 17.5H29.5C29.5 16.8 28.8 16.2 27.8 16.2C26.8 16.2 26.2 16.7 26.2 17.3C26.2 19.8 31.2 19 31.2 23.2C31.2 25.4 29.2 27 26.8 27C24.2 27 22.8 25.2 22.8 23.8H25Z" fill="#2563EB"/>
+                        <text x="44" y="25" fill="#0F172A" font-family="Inter, sans-serif" font-weight="800" font-size="15" letter-spacing="0.5">RS SOFTWARE</text>
+                    </svg>
+                </div>
+                <div class="h-5 w-px bg-slate-300/80"></div>
+                <!-- Payabbhi Logo -->
+                <a href="#" class="flex items-center space-x-1 group">
+                    <span class="text-xl sm:text-2xl font-extrabold tracking-tight text-slate-900 group-hover:text-brand-600 transition-colors">
+                        Payabbhi<span class="text-brand-600 font-bold text-xs align-top ml-0.5">®</span>
+                    </span>
+                </a>
+            </div>
+
+            <!-- Right CTA Pill Button -->
+            <div>
+                <a href="#contact" class="inline-flex items-center justify-center px-5 py-2 text-xs sm:text-sm font-semibold text-white bg-gradient-to-r from-brand-600 to-periwinkle-600 hover:from-brand-500 hover:to-periwinkle-500 rounded-full shadow-md hover:shadow-brand-500/25 transition-all transform hover:-translate-y-0.5">
+                    <i class="fa-regular fa-comment-dots mr-2"></i>
+                    Ask a question
+                </a>
+            </div>
         </div>
+    </header>
 
-        <!-- 1080x1350 (4:5 Aspect Ratio) Tabbed Video Section -->
-        <div class="video-container">
-          <div class="video-tabs">
-            <button class="tab-btn active" onclick="switchVideo(event, 'video-bank')">Bank</button>
-            <button class="tab-btn" onclick="switchVideo(event, 'video-isv')">ISV</button>
-            <button class="tab-btn" onclick="switchVideo(event, 'video-erp')">ERP</button>
-          </div>
+    <!-- SECTION 2: HERO SECTION WITH DARK BLUISH HERO & YOUTUBE INTEGRATION -->
+    <section class="relative pt-8 pb-16 lg:py-16 z-10" id="heroSection">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Dark Glassmorphic Navy Hero Banner Container -->
+            <div class="glass-panel-dark rounded-5xl p-6 sm:p-10 lg:p-12 relative overflow-hidden text-white shadow-2xl border border-white/10">
+                
+                <!-- Interactive Particle Canvas -->
+                <canvas id="heroParticles" class="absolute inset-0 w-full h-full pointer-events-auto opacity-30 z-0"></canvas>
+                
+                <!-- Ambient Glow Orbs -->
+                <div class="absolute -top-24 -left-24 w-96 h-96 bg-brand-500/20 rounded-full blur-3xl pointer-events-none"></div>
+                <div class="absolute -bottom-24 -right-24 w-96 h-96 bg-periwinkle-500/20 rounded-full blur-3xl pointer-events-none"></div>
 
-          <!-- Bank Video Embed -->
-          <div id="video-bank" class="video-content active">
-            <iframe src="https://rssoftwarecorp-my.sharepoint.com/personal/sangeetag_rssoftware_co_in/_layouts/15/embed.aspx?UniqueId=9c4a9542-4820-4434-a0ce-bf58d8cf3d5e&embed=%7B%22hvm%22%3Atrue%2C%22ust%22%3Atrue%7D&referrer=OneUpFileViewer&referrerScenario=EmbedDialog.Create" title="Bank Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+                <div class="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-8 items-center">
+                    
+                    <!-- Left Hero Text Content -->
+                    <div class="lg:col-span-7 space-y-7 text-center lg:text-left">
+                        
+                        <div class="inline-flex items-center space-x-2 px-4 py-1.5 rounded-full bg-white/10 backdrop-blur-md border border-white/15 text-brand-400 text-xs sm:text-sm font-medium">
+                            <span class="flex h-2 w-2 rounded-full bg-brand-400 animate-pulse"></span>
+                            <span>Enterprise White-Label Payments</span>
+                        </div>
 
-          <!-- ISV Video Embed -->
-          <div id="video-isv" class="video-content">
-            <iframe src="https://rssoftwarecorp-my.sharepoint.com/personal/sangeetag_rssoftware_co_in/_layouts/15/embed.aspx?UniqueId=d8894d67-ba45-475e-a5f3-79d78ce8b8ec&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" title="ISV Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+                        <h1 class="text-3xl sm:text-5xl lg:text-5xl font-extrabold tracking-tight text-white leading-tight">
+                            Merchant Acquiring <span class="text-brand-400">·</span> PayFac Infrastructure <span class="text-brand-400">·</span> White-Label
+                        </h1>
 
-          <!-- ERP Video Embed -->
-          <div id="video-erp" class="video-content">
-            <iframe src="https://rssoftwarecorp-my.sharepoint.com/personal/sangeetag_rssoftware_co_in/_layouts/15/embed.aspx?UniqueId=b8800447-86da-4011-be86-eef71120fea7&embed=%7B%22ust%22%3Atrue%2C%22hv%22%3A%22CopyEmbedCode%22%7D&referrer=StreamWebApp&referrerScenario=EmbedDialog.Create" title="ERP Video" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
-          </div>
+                        <div class="space-y-4 text-slate-300">
+                            <p class="text-xl sm:text-2xl font-bold text-white tracking-tight">
+                                "Own the payments program. Stop renting it."
+                            </p>
+                            <p class="text-base sm:text-lg font-semibold text-periwinkle-300">
+                                Own the relationship. Retain the data. Capture more of the economics.
+                            </p>
+                            <p class="text-sm sm:text-base leading-relaxed text-slate-300 max-w-2xl font-normal">
+                                Payabbhi® is a white-label merchant acquiring and payment-facilitation platform that banks, software platforms and ERPs license and run as their own — your merchants, your data, your settlement, your economics.
+                            </p>
+                        </div>
+
+                        <!-- CTA Buttons -->
+                        <div class="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 pt-2">
+                            <a href="#visitor-decision" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-white bg-gradient-to-r from-brand-600 to-periwinkle-600 hover:from-brand-500 hover:to-periwinkle-500 rounded-full shadow-lg hover:shadow-brand-500/30 transition-all transform hover:-translate-y-0.5">
+                                See your path
+                                <i class="fa-solid fa-arrow-right ml-2 text-xs"></i>
+                            </a>
+                            <a href="#contact" class="w-full sm:w-auto inline-flex items-center justify-center px-8 py-3.5 text-sm font-bold text-slate-200 hover:text-white bg-white/10 hover:bg-white/20 border border-white/15 rounded-full backdrop-blur-sm transition-all">
+                                Ask a question
+                            </a>
+                        </div>
+                        
+                        <p class="text-xs text-slate-400 italic">
+                            <i class="fa-regular fa-lightbulb text-brand-400 mr-1.5"></i> Just ask — a one-line question is plenty.
+                        </p>
+                    </div>
+
+                    <!-- Right Vertical Video Container with YouTube Embed -->
+                    <div class="lg:col-span-5 flex flex-col items-center">
+                        <div class="w-full max-w-sm sm:max-w-md relative">
+                            
+                            <!-- Main Video Card Container -->
+                            <div class="relative w-full aspect-4-5 overflow-hidden rounded-[2.5rem] shadow-glow-blue bg-black/90 border border-white/20 group">
+                                
+                                <!-- YouTube Embed Frame -->
+                                <iframe 
+                                    id="youtubeFrame"
+                                    class="w-full h-full object-cover rounded-[2.5rem] border-0 outline-none scale-105"
+                                    src="https://www.youtube.com/embed/cchVy7LKkgQ?autoplay=1&mute=1&enablejsapi=1&controls=0&loop=1&playlist=cchVy7LKkgQ&rel=0&playsinline=1" 
+                                    title="Payabbhi White-Label Video Showcase"
+                                    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                                    allowfullscreen>
+                                </iframe>
+
+                                <!-- Video Vignette Overlay for Better Readability of UI Elements -->
+                                <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-black/40 pointer-events-none"></div>
+
+                                <!-- TOP CONTROL PILLS: Translucent Overlay Controls at Top Center -->
+                                <div class="absolute top-4 left-1/2 -translate-x-1/2 flex items-center space-x-2 bg-black/40 backdrop-blur-md px-3 py-1.5 rounded-full border border-white/15 z-20 shadow-lg">
+                                    <button onclick="switchVideo('bank')" id="tab-bank" class="video-tab p-1.5 px-2.5 rounded-full text-xs font-semibold text-white bg-brand-600 transition-all shadow-sm flex items-center space-x-1" title="Aspect/Focus View">
+                                        <i class="fa-solid fa-expand text-[10px]"></i>
+                                        <span class="text-[11px] font-medium">Bank</span>
+                                    </button>
+                                    <button onclick="switchVideo('isv')" id="tab-isv" class="video-tab p-1.5 px-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1" title="Play Effect">
+                                        <i class="fa-solid fa-wand-magic-sparkles text-[10px]"></i>
+                                        <span class="text-[11px] font-medium">ISV</span>
+                                    </button>
+                                    <button onclick="switchVideo('erp')" id="tab-erp" class="video-tab p-1.5 px-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1" title="Subtitles & Translation">
+                                        <i class="fa-solid fa-language text-[10px]"></i>
+                                        <span class="text-[11px] font-medium">ERP</span>
+                                    </button>
+                                </div>
+
+                                <!-- BOTTOM OVERLAY CONTROLS: Floating Watch Film Pill + Category Tags -->
+                                <div class="absolute bottom-5 left-5 right-5 z-20 flex flex-col space-y-3 pointer-events-auto">
+                                    
+                                    <!-- Dynamic Category Tag -->
+                                    <div class="flex items-center space-x-2">
+                                        <span id="badgeTag" class="px-3 py-1 rounded-full bg-brand-500/80 backdrop-blur-md text-[10px] font-bold text-white uppercase tracking-wider border border-white/20 shadow-sm">
+                                            Bank Acquiring Infrastructure
+                                        </span>
+                                    </div>
+
+                                    <!-- Bottom Interactive Play Button Pill -->
+                                    <div class="flex items-center justify-between">
+                                        <a href="https://www.youtube.com/watch?v=cchVy7LKkgQ" target="_blank" rel="noopener" class="inline-flex items-center space-x-3 bg-white hover:bg-slate-100 text-slate-900 px-4 py-2.5 rounded-full shadow-2xl transition-all transform hover:scale-[1.03] group/btn">
+                                            <span class="w-7 h-7 rounded-full bg-brand-600 text-white flex items-center justify-center text-xs shadow-md group-hover/btn:bg-brand-700 transition-colors">
+                                                <i class="fa-solid fa-play ml-0.5"></i>
+                                            </span>
+                                            <span class="text-xs font-extrabold tracking-tight">Watch the film <span class="text-slate-400 font-medium ml-1">2:00</span></span>
+                                        </a>
+
+                                        <!-- Mute/Unmute Quick Toggle -->
+                                        <button onclick="toggleVideoSound()" id="soundBtn" class="w-9 h-9 rounded-full bg-black/50 backdrop-blur-md text-white border border-white/20 flex items-center justify-center text-xs hover:bg-black/70 transition-all shadow-md">
+                                            <i class="fa-solid fa-volume-xmark" id="soundIcon"></i>
+                                        </button>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
         </div>
-      </div>
+    </section>
+
+    <!-- SECTION 3: PROVEN ENGINEERING & UPI CREDIBILITY BANNER -->
+    <section class="py-6 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="glass-panel rounded-3xl p-6 sm:p-8 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/80 shadow-glass-sm">
+                <div class="flex-shrink-0 w-14 h-14 rounded-2xl bg-gradient-to-br from-brand-500 to-periwinkle-600 text-white flex items-center justify-center text-2xl shadow-md">
+                    <i class="fa-solid fa-shield-halved"></i>
+                </div>
+                <div class="space-y-1.5 text-center md:text-left">
+                    <p class="text-sm sm:text-base text-slate-800 leading-relaxed font-normal">
+                        <strong class="text-slate-900 font-extrabold">Payabbhi®</strong> — created by the engineers behind payment platforms processing approximately half a trillion transactions a year, and growing: India's UPI, the world's largest real-time payments rail by volume¹, and the world's largest global card network.
+                    </p>
+                    <p class="text-xs text-slate-500 italic">
+                        ¹ ACI Worldwide, Prime Time for Real-Time (2024); the IMF recognizes UPI as the world's largest real-time payment system.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 4: BIG NUMBER STATS -->
+    <section class="py-12 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 text-center">
+                
+                <!-- Stat 1 -->
+                <div class="glass-panel p-8 rounded-4xl border border-white/90 shadow-glass transition-all transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mx-auto mb-4 font-bold">
+                        <i class="fa-solid fa-clock-rotate-left"></i>
+                    </div>
+                    <div class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-periwinkle-600 mb-2">
+                        30+ <span class="text-xl font-bold text-slate-700">Years</span>
+                    </div>
+                    <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                        Built on 30+ years of national and global payments infrastructure experience
+                    </p>
+                </div>
+
+                <!-- Stat 2 -->
+                <div class="glass-panel p-8 rounded-4xl border border-white/90 shadow-glass transition-all transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-periwinkle-50 text-periwinkle-600 flex items-center justify-center text-xl mx-auto mb-4 font-bold">
+                        <i class="fa-solid fa-server"></i>
+                    </div>
+                    <div class="text-4xl sm:text-5xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-periwinkle-600 mb-2">
+                        99.995%
+                    </div>
+                    <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                        Platform uptime for mission-critical payment processing
+                    </p>
+                </div>
+
+                <!-- Stat 3 -->
+                <div class="glass-panel p-8 rounded-4xl border border-white/90 shadow-glass transition-all transform hover:-translate-y-1">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl mx-auto mb-4 font-bold">
+                        <i class="fa-solid fa-earth-americas"></i>
+                    </div>
+                    <div class="text-3xl sm:text-4xl font-extrabold text-transparent bg-clip-text bg-gradient-to-r from-brand-600 to-periwinkle-600 mb-2 mt-2">
+                        Banks, PSPs & Platforms
+                    </div>
+                    <p class="text-slate-600 text-sm font-medium leading-relaxed">
+                        Deployed across North America and Asia
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 5: THREE KINDS OF VISITOR. ONE DECISION. -->
+    <section id="visitor-decision" class="py-16 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+                <span class="text-brand-600 font-extrabold uppercase tracking-widest text-xs bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200 shadow-sm inline-block">
+                    Tailored Pathways
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Three kinds of visitor. One decision.
+                </h2>
+                <p class="text-base sm:text-lg text-slate-600 leading-relaxed">
+                    Whether you're a bank referring merchants away, a platform renting rails, or an ERP watching payments flow through un-monetized — the question is the same: <strong class="text-slate-900">who owns the program?</strong>
+                </p>
+            </div>
+
+            <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+                
+                <!-- Card 1: Banks -->
+                <div class="glass-panel rounded-4xl p-8 border border-white/90 shadow-glass hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
+                    <div class="space-y-6">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-50 flex items-center justify-center text-brand-600 text-2xl font-bold group-hover:bg-brand-600 group-hover:text-white transition-all shadow-sm">
+                            <i class="fa-solid fa-building-columns"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">Banks</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Referral fees are small. Merchant relationships are strategic. Move beyond referral economics with a bank-branded PayFac platform designed to keep merchants, data, and payment value closer to the bank.
+                        </p>
+                        
+                        <ul class="space-y-3 pt-2 text-xs sm:text-sm text-slate-700">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Your brand, your paper, your program — not a program you join</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Merchant relationships, data and settlement stay with the bank</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Licensed ownership: the value your program creates accrues to you</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-8 mt-8 border-t border-slate-200/60">
+                        <button onclick="openBrochureModal('PayFac Capabilities brochure')" class="w-full inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-bold text-brand-600 bg-brand-50/80 hover:bg-brand-600 hover:text-white rounded-full transition-all border border-brand-100 shadow-sm">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>
+                            Brochure: PayFac Capabilities
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 2: ISVs & Software Platforms -->
+                <div class="glass-panel rounded-4xl p-8 border-2 border-brand-500/80 shadow-glow-blue hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group relative overflow-hidden">
+                    <div class="absolute top-0 right-0 bg-brand-600 text-white text-[10px] uppercase font-bold tracking-widest px-4 py-1 rounded-bl-xl shadow-sm">Featured</div>
+                    <div class="space-y-6">
+                        <div class="w-14 h-14 rounded-2xl bg-brand-500 text-white flex items-center justify-center text-2xl font-bold transition-all shadow-md">
+                            <i class="fa-solid fa-laptop-code"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">ISVs & Software Platforms</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            You own the customer experience. Why let someone else own payment economics? Embed branded payments, operate on your sponsor-bank rails, and keep more of the value your platform already creates.
+                        </p>
+
+                        <ul class="space-y-3 pt-2 text-xs sm:text-sm text-slate-700">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Embedded, platform-branded payments end to end</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Settlement control, split funding, sub-merchant hierarchy</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Processor-agnostic — your processor choice, your freedom to change it</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-8 mt-8 border-t border-slate-200/60">
+                        <button onclick="openBrochureModal('Embedded Payments brochure')" class="w-full inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-bold text-white bg-brand-600 hover:bg-brand-700 rounded-full transition-all shadow-md">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>
+                            Brochure: Embedded Payments
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Card 3: ERPs -->
+                <div class="glass-panel rounded-4xl p-8 border border-white/90 shadow-glass hover:shadow-2xl transition-all duration-300 flex flex-col justify-between group">
+                    <div class="space-y-6">
+                        <div class="w-14 h-14 rounded-2xl bg-periwinkle-50 flex items-center justify-center text-periwinkle-600 text-2xl font-bold group-hover:bg-periwinkle-600 group-hover:text-white transition-all shadow-sm">
+                            <i class="fa-solid fa-network-wired"></i>
+                        </div>
+                        <h3 class="text-2xl font-extrabold text-slate-900">ERPs</h3>
+                        <p class="text-slate-600 text-sm leading-relaxed">
+                            Every invoice, receivable and payment event in your ERP is an opportunity. Embed payments into the platform experience — connecting payment acceptance, invoice lifecycle, and AR workflows.
+                        </p>
+
+                        <ul class="space-y-3 pt-2 text-xs sm:text-sm text-slate-700">
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Acceptance wired into invoices, receivables and payouts</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>The payment event monetized by the ERP — not someone else</span>
+                            </li>
+                            <li class="flex items-start">
+                                <i class="fa-solid fa-circle-check text-brand-500 mt-1 mr-2.5 flex-shrink-0"></i>
+                                <span>Multi-entity hierarchy for the businesses your ERP serves</span>
+                            </li>
+                        </ul>
+                    </div>
+
+                    <div class="pt-8 mt-8 border-t border-slate-200/60">
+                        <button onclick="openBrochureModal('Embedded Payments brochure')" class="w-full inline-flex items-center justify-center px-5 py-3 text-xs sm:text-sm font-bold text-brand-600 bg-brand-50/80 hover:bg-brand-600 hover:text-white rounded-full transition-all border border-brand-100 shadow-sm">
+                            <i class="fa-solid fa-file-pdf mr-2"></i>
+                            Brochure: Embedded Payments
+                        </button>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 6: THE MODEL MISSING FROM THE MARKET'S MENU -->
+    <section class="py-16 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="max-w-3xl mx-auto text-center space-y-3 mb-14">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    The model missing from the market's menu.
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    Payments are moving inside software. Businesses no longer choose an acquirer and bolt on software — they choose software, and payments come with it. Processing has become a commodity; the value now sits with whoever owns the merchant relationship and lifecycle. Which leaves every institution and platform a three-way choice:
+                </p>
+            </div>
+
+            <!-- 3 Strategy Cards -->
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+                <!-- Build -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/80">
+                    <div class="text-xs font-bold text-amber-700 bg-amber-100/80 px-3 py-1 rounded-full inline-block mb-3">1. Build</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">"Own it, eventually"</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Building acquiring infrastructure in-house typically takes three to five years and an eight-figure budget — ownership arrives after the market has moved.
+                    </p>
+                </div>
+
+                <!-- Rent -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/80">
+                    <div class="text-xs font-bold text-rose-700 bg-rose-100/80 px-3 py-1 rounded-full inline-block mb-3">2. Rent</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">"Fast, but never yours"</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        PayFac-as-a-Service, managed programs, referral agreements — every rented model closes the capability gap while the merchant relationship and the economics stay with the provider.
+                    </p>
+                </div>
+
+                <!-- License & Own -->
+                <div class="glass-panel p-6 rounded-3xl border-2 border-brand-500 bg-brand-50/40 shadow-glass">
+                    <div class="text-xs font-bold text-white bg-brand-600 px-3 py-1 rounded-full inline-block mb-3">3. License & Own</div>
+                    <h3 class="text-lg font-bold text-slate-900 mb-2">"Fast, and yours"</h3>
+                    <p class="text-xs sm:text-sm text-slate-700 leading-relaxed">
+                        License the acquiring and PayFac operating platform and run it as your own program — the option most market taxonomies don't yet have a row for. <strong class="text-brand-700">Payabbhi® is that row.</strong>
+                    </p>
+                </div>
+            </div>
+
+            <!-- Two Comparison Cards -->
+            <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                <!-- Table 1: Refer or Rent -->
+                <div class="glass-panel rounded-4xl p-6 sm:p-8 border border-white/80 shadow-glass">
+                    <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-200">
+                        <div class="w-10 h-10 rounded-xl bg-rose-100 text-rose-600 flex items-center justify-center font-bold">
+                            <i class="fa-solid fa-xmark text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-slate-900">Refer or Rent</h3>
+                            <p class="text-xs text-slate-500">The Traditional Rented Model</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-slate-700 text-sm">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-minus text-rose-500 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>A referral fee, while the provider owns your merchant</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-minus text-rose-500 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Merchant data lives in someone else's stack</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-minus text-rose-500 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>The program's economics accrue to the provider</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-minus text-rose-500 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Your roadmap waits on a vendor's roadmap</span>
+                        </li>
+                    </ul>
+                </div>
+
+                <!-- Table 2: License & Own with Payabbhi -->
+                <div class="glass-panel-dark text-white rounded-4xl p-6 sm:p-8 border border-white/10 shadow-2xl relative overflow-hidden">
+                    <div class="flex items-center space-x-3 mb-6 pb-4 border-b border-slate-800">
+                        <div class="w-10 h-10 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold border border-emerald-500/30">
+                            <i class="fa-solid fa-check text-xl"></i>
+                        </div>
+                        <div>
+                            <h3 class="text-xl font-bold text-white">License & Own with Payabbhi®</h3>
+                            <p class="text-xs text-brand-400">The Owned Operating Model</p>
+                        </div>
+                    </div>
+                    <ul class="space-y-4 text-slate-200 text-sm">
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Your program, under your brand, on your paper</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Merchants, data and settlement files stay yours</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>The value your program creates accrues to you</span>
+                        </li>
+                        <li class="flex items-start">
+                            <i class="fa-solid fa-circle-check text-emerald-400 mt-1 mr-3 flex-shrink-0"></i>
+                            <span>Processor-agnostic beneath; dedicated cloud or on-premise</span>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 7: THE PLATFORM UNDERNEATH (8 FEATURE CARDS) -->
+    <section class="py-16 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+                <span class="text-brand-600 font-extrabold uppercase tracking-widest text-xs bg-brand-50 px-4 py-1.5 rounded-full border border-brand-200 shadow-sm inline-block">
+                    Full-Stack Capability
+                </span>
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    The platform underneath.
+                </h2>
+                <p class="text-base sm:text-lg text-slate-600">
+                    Everything an owned program needs to operate, on one platform — under your brand.
+                </p>
+            </div>
+
+            <!-- 8 Feature Cards Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                
+                <!-- 1. Payment Acceptance -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-credit-card"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Payment Acceptance</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        POS, eCommerce and mCommerce — card processing and beyond.
+                    </p>
+                </div>
+
+                <!-- 2. Payment Links -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-periwinkle-50 text-periwinkle-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-link"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Payment Links</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        No-integration payment acceptance tailored for any digital channel.
+                    </p>
+                </div>
+
+                <!-- 3. Tokenization -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-shield-cat"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Tokenization</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Stored credentials, network tokens, and PCI-scope reduction.
+                    </p>
+                </div>
+
+                <!-- 4. Embedded Payments -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-periwinkle-50 text-periwinkle-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-code"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Embedded Payments</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        APIs, SDKs and drop-in components designed inside your product.
+                    </p>
+                </div>
+
+                <!-- 5. Invoicing -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-file-invoice-dollar"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Invoicing</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Complete invoice lifecycle directly wired to acceptance and AR.
+                    </p>
+                </div>
+
+                <!-- 6. Subscriptions -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-periwinkle-50 text-periwinkle-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-arrows-rotate"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Subscriptions</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Recurring billing engines and full mandate management.
+                    </p>
+                </div>
+
+                <!-- 7. Partner Management -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-50 text-brand-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-users-gear"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Partner Management</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Sub-merchant hierarchy, delegated controls, and residuals tracking.
+                    </p>
+                </div>
+
+                <!-- 8. Merchant Operations -->
+                <div class="glass-panel p-6 rounded-3xl border border-white/90 shadow-glass-sm hover:shadow-lg transition-all">
+                    <div class="w-12 h-12 rounded-2xl bg-periwinkle-50 text-periwinkle-600 flex items-center justify-center text-xl font-bold mb-4">
+                        <i class="fa-solid fa-chart-line"></i>
+                    </div>
+                    <h3 class="text-base font-bold text-slate-900 mb-1.5">Merchant Operations</h3>
+                    <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                        Digital onboarding, merchant portals, statements, disputes & support.
+                    </p>
+                </div>
+
+            </div>
+        </div>
+    </section>
+
+    <!-- SECTION 8: BUILT TO RUN THE METRICS AN OWNED PROGRAM LIVES BY -->
+    <section class="py-16 z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="text-center max-w-3xl mx-auto mb-14 space-y-3">
+                <h2 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+                    Built to run the metrics an owned program lives by.
+                </h2>
+                <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
+                    We don't promise a percentage — results vary by implementation. We instrument the metrics themselves, so your program gets measurably better at the numbers that decide its economics.
+                </p>
+            </div>
+
+            <!-- 4 Metric Cards Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+                
+                <!-- Metric 1 -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/90 flex space-x-5">
+                    <div class="text-brand-600 text-2xl font-extrabold pt-0.5">01</div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-slate-900">Time-to-first-transaction</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Per merchant / entity — the activation funnel (application → approval → first settled transaction) is a first-class, measured workflow.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric 2 -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/90 flex space-x-5">
+                    <div class="text-periwinkle-600 text-2xl font-extrabold pt-0.5">02</div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-slate-900">Activation rate</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Merchants transacting within 30 days — because boarding without activation is cost, not revenue.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric 3 -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/90 flex space-x-5">
+                    <div class="text-brand-600 text-2xl font-extrabold pt-0.5">03</div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-slate-900">Split funding</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Per-entity settlement across parties, funds and hierarchies — built for multi-entity, multi-location programs.
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Metric 4 -->
+                <div class="glass-panel p-6 sm:p-8 rounded-3xl border border-white/90 flex space-x-5">
+                    <div class="text-periwinkle-600 text-2xl font-extrabold pt-0.5">04</div>
+                    <div class="space-y-1">
+                        <h3 class="text-lg font-bold text-slate-900">Your rails</h3>
+                        <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+                            Processor-agnostic by design — deployed in a dedicated cloud or on-premise, on the processor you choose.
+                        </p>
+                    </div>
+                </div>
+
+            </div>
+
+            <!-- Operational Model / CFO View Banner -->
+            <div class="glass-panel-dark text-white rounded-3xl p-6 sm:p-8 border border-white/10 shadow-xl flex flex-col sm:flex-row items-center justify-between gap-6">
+                <div class="flex items-center space-x-4">
+                    <div class="w-12 h-12 rounded-2xl bg-brand-500/20 text-brand-400 flex items-center justify-center text-xl flex-shrink-0 border border-brand-500/30">
+                        <i class="fa-solid fa-sliders"></i>
+                    </div>
+                    <p class="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed">
+                        Behind these sits an operating model: nine operational control planes, each with the KPIs its owner runs, rolled into one CFO view — so the program is managed as a business line from day one.
+                    </p>
+                </div>
+            </div>
+
+        </div>
+    </section>
+
+    <!-- SECTION 9: FORM & INTERACTIVE CONTACT SECTION -->
+    <section id="contact" class="py-16 z-10 relative">
+        <div class="max-w-3xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <div class="glass-panel rounded-5xl p-8 sm:p-12 border border-white/90 shadow-2xl">
+                
+                <div class="text-center space-y-2 mb-8">
+                    <h2 class="text-3xl font-extrabold text-slate-900 tracking-tight">
+                        Start with a question.
+                    </h2>
+                    <p class="text-slate-600 text-sm">
+                        Ask the question you're actually sitting with — own vs. refer (merchant); rent vs. own (platform for merchant relationship / lifecycle). What does the crossover math look like?
+                    </p>
+                    <p class="text-brand-600 font-semibold text-xs">
+                        A one-line reply is plenty.
+                    </p>
+                </div>
+
+                <!-- Interactive Form -->
+                <form id="contactForm" onsubmit="handleFormSubmit(event)" class="space-y-5">
+                    <div>
+                        <label for="userQuestion" class="block text-xs font-bold text-slate-700 mb-1.5">
+                            Your question <span class="font-normal text-slate-500">(one line is plenty)</span>
+                        </label>
+                        <textarea id="userQuestion" rows="3" required placeholder="e.g., How long does it take for an ISV to switch from a PayFac-as-a-service model to Payabbhi?" class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white/80 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-900 placeholder-slate-400 text-xs sm:text-sm transition-all shadow-inner"></textarea>
+                    </div>
+
+                    <div>
+                        <label for="userEmail" class="block text-xs font-bold text-slate-700 mb-1.5">
+                            Your email <span class="font-normal text-slate-500">(Only so we can reply)</span>
+                        </label>
+                        <input type="email" id="userEmail" required placeholder="name@company.com" class="w-full px-4 py-3 rounded-2xl border border-slate-200 bg-white/80 focus:ring-2 focus:ring-brand-500 focus:border-brand-500 text-slate-900 placeholder-slate-400 text-xs sm:text-sm transition-all shadow-inner">
+                    </div>
+
+                    <!-- Math CAPTCHA Field -->
+                    <div class="bg-white/60 p-4 rounded-2xl border border-slate-200/80 flex flex-col sm:flex-row items-center justify-between gap-4">
+                        <div class="flex items-center space-x-3">
+                            <span class="text-xs font-bold text-slate-700">Security Check:</span>
+                            <span id="captchaMath" class="px-3 py-1 bg-white border border-slate-300 rounded-xl text-xs font-bold text-brand-700 shadow-sm">5 + 3 = ?</span>
+                        </div>
+                        <input type="number" id="captchaAnswer" required placeholder="Answer" class="w-28 px-3 py-2 rounded-xl border border-slate-300 text-xs focus:ring-2 focus:ring-brand-500 text-center bg-white">
+                    </div>
+
+                    <!-- Submit Button -->
+                    <button type="submit" class="w-full py-3.5 px-6 text-sm font-bold text-white bg-gradient-to-r from-brand-600 to-periwinkle-600 hover:from-brand-500 hover:to-periwinkle-500 rounded-full shadow-lg hover:shadow-brand-500/25 transition-all flex items-center justify-center">
+                        <i class="fa-solid fa-paper-plane mr-2"></i>
+                        Send — a one line question is plenty
+                    </button>
+
+                    <!-- Form Feedback Message -->
+                    <div id="formFeedback" class="hidden p-4 rounded-2xl text-center text-xs sm:text-sm font-semibold"></div>
+                </form>
+
+                <p class="text-[11px] text-center text-slate-500 mt-6">
+                    We'll use your email only to reply. No lists, no follow-up sequence. 
+                    <a href="#" class="text-brand-600 hover:underline ml-1">Privacy policy</a>
+                </p>
+
+                <!-- Direct Contact Link & Brochure Downloads -->
+                <div class="mt-8 pt-6 border-t border-slate-200/80 flex flex-col items-center space-y-5">
+                    <p class="text-xs sm:text-sm text-slate-600 font-medium">
+                        Prefer email? Write to 
+                        <a href="mailto:ContactPayabbhi@rssoftware.com" class="text-brand-600 font-bold hover:underline">ContactPayabbhi@rssoftware.com</a>
+                    </p>
+
+                    <div class="flex flex-col sm:flex-row gap-3 w-full justify-center">
+                        <button onclick="openBrochureModal('PayFac Capabilities brochure')" class="inline-flex items-center justify-center px-5 py-2.5 border border-slate-200 hover:border-brand-500 rounded-full text-xs font-bold text-slate-700 hover:text-brand-600 bg-white/80 transition-all shadow-sm">
+                            <i class="fa-solid fa-download mr-2 text-brand-600"></i>
+                            PayFac Capabilities brochure
+                        </button>
+                        <button onclick="openBrochureModal('Embedded Payments brochure')" class="inline-flex items-center justify-center px-5 py-2.5 border border-slate-200 hover:border-brand-500 rounded-full text-xs font-bold text-slate-700 hover:text-brand-600 bg-white/80 transition-all shadow-sm">
+                            <i class="fa-solid fa-download mr-2 text-brand-600"></i>
+                            Embedded Payments brochure
+                        </button>
+                    </div>
+
+                    <div>
+                        <a href="https://www.rssoftware.com" target="_blank" rel="noopener" class="text-xs text-slate-500 hover:text-brand-600 transition-colors inline-flex items-center font-semibold">
+                            About RS Software <i class="fa-solid fa-arrow-right ml-1.5 text-[10px]"></i>
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+    </section>
+
+    <!-- FOOTER WITH MANDATORY REGULATORY DISCLOSURE -->
+    <footer class="bg-navy-950 text-slate-400 py-10 border-t border-slate-800 text-xs leading-relaxed z-10 relative">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 text-center sm:text-left">
+            <p class="max-w-5xl">
+                Payabbhi® is a payments technology platform — not a bank, card processor, or licensed money transmitter. Operating as a payment facilitator requires an acquiring sponsor bank and applicable card-network registration. Payabbhi is processor-agnostic; specific processor/PSP integrations are confirmed during solution review.
+            </p>
+            <div class="pt-6 border-t border-slate-800/80 flex flex-col sm:flex-row items-center justify-between gap-4 text-slate-500">
+                <p>© Payabbhi® / RS Software. All rights reserved.</p>
+                <div class="flex space-x-6">
+                    <a href="#" class="hover:text-slate-300 transition-colors">Privacy Policy</a>
+                    <a href="#" class="hover:text-slate-300 transition-colors">Terms of Service</a>
+                    <a href="#" class="hover:text-slate-300 transition-colors">Security</a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <!-- RESPONSIVE BROCHURE DOWNLOAD MODAL -->
+    <div id="brochureModal" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-900/60 backdrop-blur-md hidden p-4">
+        <div class="glass-panel rounded-4xl max-w-md w-full p-6 sm:p-8 shadow-2xl relative border border-white/90">
+            <button onclick="closeBrochureModal()" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            <div class="text-center space-y-4">
+                <div class="w-12 h-12 bg-brand-50 text-brand-600 rounded-2xl flex items-center justify-center mx-auto text-xl font-bold shadow-sm">
+                    <i class="fa-solid fa-file-arrow-down"></i>
+                </div>
+                <h3 id="modalBrochureTitle" class="text-xl font-extrabold text-slate-900">Download Brochure</h3>
+                <p class="text-xs sm:text-sm text-slate-600">Enter your email to instantly receive the PDF download link.</p>
+                <input type="email" id="modalEmail" placeholder="you@company.com" class="w-full px-4 py-2.5 rounded-2xl border border-slate-200 text-xs sm:text-sm focus:ring-2 focus:ring-brand-500 bg-white">
+                <button onclick="confirmBrochureDownload()" class="w-full py-3 bg-gradient-to-r from-brand-600 to-periwinkle-600 hover:from-brand-500 hover:to-periwinkle-500 text-white font-bold rounded-full text-xs sm:text-sm transition-all shadow-md">
+                    Get PDF Brochure
+                </button>
+                <div id="modalFeedback" class="hidden text-xs text-emerald-600 font-semibold mt-2"></div>
+            </div>
+        </div>
     </div>
-  </section>
 
-  <!-- Trust Strip Section -->
-  <section class="trust reveal" id="trust">
-    <div class="wrap">
-      <div class="visionline">
-        Payabbhi® — created by the engineers behind payment platforms processing approximately <b>half a trillion transactions a year</b>, and growing: <b>India's UPI</b>, the world's largest real-time payments rail by volume¹, and the world's largest <b>global card network</b>.
-      </div>
-      <div class="citation-sub">
-        ¹ ACI Worldwide, Prime Time for Real-Time (2024); the IMF recognizes UPI as the world's largest real-time payment system.
-      </div>
-      <div class="trustin">
-        <div>Built on 30+ years of national and global payments infrastructure experience</div>
-        <div>99.995% platform uptime</div>
-        <div>Deployed with banks, PSPs &amp; platforms across North America and Asia</div>
-      </div>
-    </div>
-  </section>
+    <script>
+        // 1. YouTube Embedded Video Switcher Logic
+        const YOUTUBE_CONFIGS = {
+            bank: {
+                videoId: "cchVy7LKkgQ",
+                label: "Bank Acquiring Infrastructure"
+            },
+            isv: {
+                videoId: "cchVy7LKkgQ",
+                label: "Embedded ISV Payments"
+            },
+            erp: {
+                videoId: "cchVy7LKkgQ",
+                label: "ERP Receivables & Invoicing"
+            }
+        };
 
-  <!-- Three Doors Section -->
-  <section id="doors" class="doors-section reveal">
-    <div class="wrap">
-      <h2>Three kinds of visitor. One decision.</h2>
-      <p class="lede">Whether you're a bank referring merchants away, a platform renting rails, or an ERP watching payments flow through un-monetized — the question is the same: who owns the program?</p>
+        let isMuted = true;
 
-      <div class="doors">
-        <div class="door">
-          <div class="tag">Banks</div>
-          <h3>Referral fees are small. Merchant relationships are strategic.</h3>
-          <p>Move beyond referral economics with a bank-branded PayFac platform designed to keep merchants, data, and payment value closer to the bank.</p>
-          <ul>
-            <li>Your brand, your paper, your program — not a program you join</li>
-            <li>Merchant relationships, data and settlement stay with the bank</li>
-            <li>Licensed ownership: the value your program creates accrues to you</li>
-          </ul>
-          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_PayFac_Capabilities.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for PayFac Capabilities</a>
-        </div>
+        function switchVideo(type) {
+            const iframe = document.getElementById('youtubeFrame');
+            const badgeTag = document.getElementById('badgeTag');
+            
+            // Update Active Pill Styles
+            const tabs = ['bank', 'isv', 'erp'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (t === type) {
+                    btn.className = "video-tab p-1.5 px-2.5 rounded-full text-xs font-semibold text-white bg-brand-600 transition-all shadow-sm flex items-center space-x-1";
+                } else {
+                    btn.className = "video-tab p-1.5 px-2.5 rounded-full text-xs font-semibold text-slate-300 hover:text-white hover:bg-white/10 transition-all flex items-center space-x-1";
+                }
+            });
 
-        <div class="door">
-          <div class="tag">ISVs &amp; Software Platforms</div>
-          <h3>You own the customer experience. Why let someone else own payment economics?</h3>
-          <p>Embed branded payments, operate on your sponsor-bank rails, and keep more of the value your platform already creates.</p>
-          <ul>
-            <li>Embedded, platform-branded payments end to end</li>
-            <li>Settlement control, split funding, sub-merchant hierarchy</li>
-            <li>Processor-agnostic — your processor choice, your freedom to change it</li>
-          </ul>
-          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for Embedded Payments</a>
-        </div>
+            // Reload iframe with target YouTube URL parameters
+            if (YOUTUBE_CONFIGS[type]) {
+                const videoId = YOUTUBE_CONFIGS[type].videoId;
+                const muteParam = isMuted ? "1" : "0";
+                const newSrc = `https://www.youtube.com/embed/${videoId}?autoplay=1&mute=${muteParam}&enablejsapi=1&controls=0&loop=1&playlist=${videoId}&rel=0&playsinline=1`;
+                iframe.src = newSrc;
+                badgeTag.innerText = YOUTUBE_CONFIGS[type].label;
+            }
+        }
 
-        <div class="door">
-          <div class="tag">ERPs</div>
-          <h3>Every invoice, receivable and payment event in your ERP is an opportunity.</h3>
-          <p>Embed payments into the platform experience — connecting payment acceptance, invoice lifecycle, and AR workflows. Keep more value inside the ERP ecosystem.</p>
-          <ul>
-            <li>Acceptance wired into invoices, receivables and payouts</li>
-            <li>The payment event monetized by the ERP — not, by default, someone else</li>
-            <li>Multi-entity hierarchy for the businesses your ERP serves</li>
-          </ul>
-          <a class="dl" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Brochure: White-Label Solution for Embedded Payments</a>
-        </div>
-      </div>
-    </div>
-  </section>
+        function toggleVideoSound() {
+            const iframe = document.getElementById('youtubeFrame');
+            const icon = document.getElementById('soundIcon');
+            isMuted = !isMuted;
+            
+            if (isMuted) {
+                icon.className = "fa-solid fa-volume-xmark";
+                iframe.contentWindow.postMessage('{"event":"command","func":"mute","args":""}', '*');
+            } else {
+                icon.className = "fa-solid fa-volume-high";
+                iframe.contentWindow.postMessage('{"event":"command","func":"unMute","args":""}', '*');
+            }
+        }
 
-  <!-- Missing Model Section -->
-  <section class="mm reveal" id="missing-model">
-    <div class="wrap">
-      <h2>The model missing from the market's menu.</h2>
-      <p class="lede">Payments are moving inside software. Businesses no longer choose an acquirer and bolt on software — they choose software, and payments come with it. Processing has become a commodity; the value now sits with whoever owns the merchant relationship and lifecycle. Which leaves every institution and platform a three-way choice:</p>
+        // 2. Interactive Floating Particle Canvas Logic
+        const canvas = document.getElementById('heroParticles');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        let mouse = { x: null, y: null, radius: 120 };
 
-      <div class="paths">
-        <div class="path">
-          <div class="plabel">Build</div>
-          <h4>Own it, eventually</h4>
-          <p>Building acquiring infrastructure in-house typically takes three to five years and an eight-figure budget — ownership arrives after the market has moved.</p>
-        </div>
-        <div class="path">
-          <div class="plabel">Rent</div>
-          <h4>Fast, but never yours</h4>
-          <p>PayFac-as-a-Service, managed programs, referral agreements — every rented model closes the capability gap while the merchant relationship and the economics stay with the provider.</p>
-        </div>
-        <div class="path lic">
-          <div class="plabel">License &amp; own</div>
-          <h4>Fast, and yours</h4>
-          <p>License the acquiring and PayFac operating platform and run it as your own program — the option most market taxonomies don't yet have a row for. Payabbhi® is that row.</p>
-        </div>
-      </div>
+        function resizeCanvas() {
+            if (!canvas.parentElement) return;
+            canvas.width = canvas.parentElement.clientWidth;
+            canvas.height = canvas.parentElement.clientHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-      <div class="rvotable">
-        <div class="rvocol rent">
-          <h3>Refer or rent</h3>
-          <ul>
-            <li>A referral fee, while the provider owns your merchant</li>
-            <li>Merchant data lives in someone else's stack</li>
-            <li>The program's economics accrue to the provider</li>
-            <li>Your roadmap waits on a vendor's roadmap</li>
-          </ul>
-        </div>
-        <div class="rvocol own">
-          <h3>License &amp; own with Payabbhi®</h3>
-          <ul>
-            <li>Your program, under your brand, on your paper</li>
-            <li>Merchants, data and settlement files stay yours</li>
-            <li>The value your program creates accrues to you</li>
-            <li>Processor-agnostic beneath; dedicated cloud or on-premise</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Features Section -->
-  <section class="features reveal" id="features">
-    <div class="wrap">
-      <h2>The platform underneath.</h2>
-      <p class="lede">Everything an owned program needs to operate, on one platform — under your brand.</p>
-
-      <div class="featgrid">
-        <div class="feat"><b>Payment acceptance</b>POS, eCommerce and mCommerce — card and beyond</div>
-        <div class="feat"><b>Payment links</b>No-integration acceptance for any channel</div>
-        <div class="feat"><b>Tokenization</b>Stored credentials, network tokens, PCI-scope reduction</div>
-        <div class="feat"><b>Embedded payments</b>APIs, SDKs and drop-in components inside your product</div>
-        <div class="feat"><b>Invoicing</b>Invoice lifecycle wired to acceptance and AR</div>
-        <div class="feat"><b>Subscriptions</b>Recurring billing and mandate management</div>
-        <div class="feat"><b>Partner management</b>Sub-merchant hierarchy, delegated controls, residuals</div>
-        <div class="feat"><b>Merchant operations</b>Onboarding, portals, statements, disputes, support</div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Proof / KPI Section -->
-  <section class="proof-section reveal" id="proof">
-    <div class="wrap">
-      <h2>Built to run the metrics an owned program lives by.</h2>
-      <p class="lede">We don't promise a percentage — results vary by implementation. We instrument the metrics themselves, so your program gets measurably better at the numbers that decide its economics.</p>
-
-      <div class="proofgrid">
-        <div class="proof">
-          <div class="big">Time-to-first-transaction</div>
-          <div class="lbl">Per merchant / entity — the activation funnel (application → approval → first settled transaction) is a first-class, measured workflow.</div>
-        </div>
-        <div class="proof">
-          <div class="big">Activation rate</div>
-          <div class="lbl">Merchants transacting within 30 days — because boarding without activation is cost, not revenue.</div>
-        </div>
-        <div class="proof">
-          <div class="big">Split funding</div>
-          <div class="lbl">Per-entity settlement across parties, funds and hierarchies — built for multi-entity, multi-location programs.</div>
-        </div>
-        <div class="proof">
-          <div class="big">Your rails</div>
-          <div class="lbl">Processor-agnostic by design — deployed in a dedicated cloud or on-premise, on the processor you choose.</div>
-        </div>
-      </div>
-
-      <p class="planesline">Behind these sits an operating model: nine operational control planes, each with the KPIs its owner runs, rolled into one CFO view — so the program is managed as a business line from day one.</p>
-    </div>
-  </section>
-
-  <!-- CTA Section -->
-  <section class="closer reveal" id="talk">
-    <div class="wrap">
-      <h2>Start with a question.</h2>
-      <p class="ask">
-        Ask the question you're actually sitting with — own vs. refer <span class="qual">(merchant)</span>; rent vs. own <span class="qual">(platform for merchant relationship / lifecycle)</span>.<span class="q">What does the crossover math look like?</span>
-      </p>
-      <p class="plenty">A one-line reply is plenty.</p>
-
-      <form class="qform" action="#" method="POST">
-        <textarea required rows="3" placeholder="Your question — one line is plenty"></textarea>
-        <input type="email" required placeholder="Your email (only so we can reply)">
-        <button type="submit">Send — a one-line question is plenty</button>
-        <div class="qpriv">We'll use your email only to reply. No lists, no follow-up sequence. <a href="#">Privacy policy</a></div>
-        <div class="qfall">Prefer email? Write to <a
-            href="mailto:ContactPayabbhi@rssoftware.com?subject=Enquiry-%20Payabbhi-%20own">ContactPayabbhi@rssoftware.com</a></div>
-      </form>
-
-      <div class="dlrow">
-        <a class="dlbtn" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_PayFac_Capabilities.pdf" target="_blank" rel="noopener">PayFac Capabilities brochure</a>
-        <a class="dlbtn" href="https://rssoftware.ai/asset/uploads/product_brochures/RS_Software_Payabbhi_White_Label_Solution_for_Embedded_Payments.pdf" target="_blank" rel="noopener">Embedded Payments brochure</a>
-      </div>
-
-      <p class="about-link"><a href="https://rssoftware.ai/home/who_we_are/" target="_blank" rel="noopener">About RS Software →</a></p>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="wrap">
-      <div class="comp">Payabbhi® is a payments technology platform — not a bank, card processor, or licensed money transmitter. Operating as a payment facilitator requires an acquiring sponsor bank and applicable card-network registration. Payabbhi is processor-agnostic; specific processor/PSP integrations are confirmed during solution review.</div>
-      <div class="base">© 2026 RS Software · <a href="https://rssoftware.ai/about" target="_blank" rel="noopener">About</a> · <a href="#">Privacy policy</a> · <a href="#">Terms of use</a></div>
-    </div>
-  </footer>
-
-  <!-- Scripts -->
-  <script>
-    /* Tab Switch Script */
-    function switchVideo(event, videoId) {
-      const videos = document.querySelectorAll('.video-content');
-      videos.forEach(v => v.classList.remove('active'));
-
-      const tabs = document.querySelectorAll('.tab-btn');
-      tabs.forEach(t => t.classList.remove('active'));
-
-      document.getElementById(videoId).classList.add('active');
-      event.currentTarget.classList.add('active');
-    }
-
-    /* Scroll Reveal Animation Script using IntersectionObserver */
-    document.addEventListener('DOMContentLoaded', () => {
-      const observerOptions = {
-        root: null,
-        rootMargin: '0px',
-        threshold: 0.12
-      };
-
-      const observer = new IntersectionObserver((entries, observer) => {
-        entries.forEach(entry => {
-          if (entry.isIntersecting) {
-            entry.target.classList.add('active');
-            observer.unobserve(entry.target);
-          }
+        window.addEventListener('mousemove', (e) => {
+            const rect = canvas.getBoundingClientRect();
+            mouse.x = e.clientX - rect.left;
+            mouse.y = e.clientY - rect.top;
         });
-      }, observerOptions);
 
-      const revealElements = document.querySelectorAll('.reveal');
-      revealElements.forEach(el => observer.observe(el));
-    });
-  </script>
+        window.addEventListener('mouseleave', () => {
+            mouse.x = null;
+            mouse.y = null;
+        });
 
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 1;
+                this.speedX = Math.random() * 0.8 - 0.4;
+                this.speedY = Math.random() * 0.8 - 0.4;
+                this.opacity = Math.random() * 0.5 + 0.3;
+            }
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < 0 || this.x > canvas.width) this.speedX *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.speedY *= -1;
+
+                if (mouse.x !== null && mouse.y !== null) {
+                    let dx = mouse.x - this.x;
+                    let dy = mouse.y - this.y;
+                    let distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < mouse.radius) {
+                        const force = (mouse.radius - distance) / mouse.radius;
+                        const directionX = dx / distance;
+                        const directionY = dy / distance;
+                        this.x -= directionX * force * 3;
+                        this.y -= directionY * force * 3;
+                    }
+                }
+            }
+            draw() {
+                ctx.fillStyle = `rgba(129, 140, 248, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        function initParticles() {
+            particles = [];
+            const count = Math.floor((canvas.width * canvas.height) / 8500);
+            for (let i = 0; i < count; i++) {
+                particles.push(new Particle());
+            }
+        }
+        initParticles();
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
+            for (let a = 0; a < particles.length; a++) {
+                for (let b = a + 1; b < particles.length; b++) {
+                    let dx = particles[a].x - particles[b].x;
+                    let dy = particles[a].y - particles[b].y;
+                    let dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 100) {
+                        ctx.strokeStyle = `rgba(99, 102, 241, ${0.15 * (1 - dist / 100)})`;
+                        ctx.lineWidth = 0.8;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[a].x, particles[a].y);
+                        ctx.lineTo(particles[b].x, particles[b].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            particles.forEach(p => {
+                p.update();
+                p.draw();
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        
+        window.onload = function() {
+            resizeCanvas();
+            animateParticles();
+        };
+
+        // 3. Math CAPTCHA Generator & Form Submission
+        let num1 = Math.floor(Math.random() * 9) + 1;
+        let num2 = Math.floor(Math.random() * 9) + 1;
+        let captchaResult = num1 + num2;
+        document.getElementById('captchaMath').innerText = `${num1} + ${num2} = ?`;
+
+        function handleFormSubmit(e) {
+            e.preventDefault();
+            const userAnswer = parseInt(document.getElementById('captchaAnswer').value);
+            const feedback = document.getElementById('formFeedback');
+
+            if (userAnswer !== captchaResult) {
+                feedback.className = "p-4 rounded-2xl text-center text-xs sm:text-sm font-semibold bg-rose-100/80 text-rose-700 border border-rose-200 block";
+                feedback.innerText = "Incorrect CAPTCHA answer. Please try again.";
+                return;
+            }
+
+            feedback.className = "p-4 rounded-2xl text-center text-xs sm:text-sm font-semibold bg-emerald-100/80 text-emerald-800 border border-emerald-200 block";
+            feedback.innerText = "Thank you! Your question has been submitted. We'll reply directly to your email soon.";
+
+            document.getElementById('contactForm').reset();
+            // Reset CAPTCHA
+            num1 = Math.floor(Math.random() * 9) + 1;
+            num2 = Math.floor(Math.random() * 9) + 1;
+            captchaResult = num1 + num2;
+            document.getElementById('captchaMath').innerText = `${num1} + ${num2} = ?`;
+        }
+
+        // 4. Interactive Brochure Modal
+        function openBrochureModal(title) {
+            document.getElementById('modalBrochureTitle').innerText = title;
+            document.getElementById('modalFeedback').classList.add('hidden');
+            document.getElementById('brochureModal').classList.remove('hidden');
+        }
+
+        function closeBrochureModal() {
+            document.getElementById('brochureModal').classList.add('hidden');
+        }
+
+        function confirmBrochureDownload() {
+            const email = document.getElementById('modalEmail').value;
+            const feedback = document.getElementById('modalFeedback');
+            if (!email || !email.includes('@')) {
+                feedback.innerText = "Please enter a valid email address.";
+                feedback.className = "text-xs text-rose-600 font-semibold mt-2 block";
+                return;
+            }
+            feedback.innerText = `Thank you! The download link has been sent to ${email}`;
+            feedback.className = "text-xs text-emerald-600 font-semibold mt-2 block";
+
+            setTimeout(() => {
+                closeBrochureModal();
+                document.getElementById('modalEmail').value = '';
+            }, 1800);
+        }
+    </script>
 </body>
 </html>
